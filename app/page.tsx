@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
-  const [jadualSolat, updateJadualSolat, clearJadualSolat] = useLocalStorage<GetSolatResponses | null>('jadualSolat', null)
+  const [jadualSolat, updateJadualSolat] = useLocalStorage<GetSolatResponses | null>('jadualSolat', null)
   const [currentJadualSolat, setCurrentJadualSolat] = useState<GetSolatResponses | null>(null)
 
   const handleUpdateJadualSolat = (jadualSolat: GetSolatResponses | null) => {
@@ -22,7 +22,7 @@ export default function Home() {
       setCurrentJadualSolat(jadualSolat)
       console.log("Jadual Solat Updated", jadualSolat)
     }
-  }, [])
+  }, [jadualSolat])
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">

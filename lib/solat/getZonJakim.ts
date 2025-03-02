@@ -9,8 +9,8 @@ export type ZonJakim = {
 }
 
 export async function getZonJakim(latitude: number, longitude: number): Promise<ZonJakim | null> {
-    var search = new PolygonLookup(ZonJakimJson as FeatureCollection)
-    var result = search.search(longitude, latitude)
+    const search = new PolygonLookup(ZonJakimJson as FeatureCollection)
+    const result = search.search(longitude, latitude)
     if (result && result.properties) {
         return {
             code : result.properties.jakim_code,

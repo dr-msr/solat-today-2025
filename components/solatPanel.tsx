@@ -2,7 +2,7 @@ import { GetSolatResponses } from "@/app/api/getSolat/route"
 import { formatHijri } from "@/lib/utils"
 import { MinusCircle, PlusCircle } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface SolatPanelProps {
     jadualSolat: GetSolatResponses
@@ -22,7 +22,7 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
     function convertTime(time: number) {
         const date = new Date(time * 1000);
         const localTimeString = date.toLocaleTimeString(undefined, { hour12: true, hour: 'numeric', minute: 'numeric' });
-
+        console.log(statusCountdown)
         return localTimeString;
     }
 

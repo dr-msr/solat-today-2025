@@ -1,10 +1,9 @@
 'use client'
 
-import { GetSolatResponses, ZonJakim } from "@/app/api/getSolat/route";
+import { GetSolatResponses } from "@/app/api/getSolat/route";
 import { CircleX, RefreshCcwIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useGeolocation, useLocalStorage } from "react-use";
-import { Button } from "./ui/button";
 import { GeoLocationSensorState } from "react-use/lib/useGeolocation";
 import { PuffLoader } from "react-spinners";
 
@@ -29,6 +28,8 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
     const [solatError, setSolatError] = useState<string | null>(null)
 
     const handleUpdateLocation = (refresh?: boolean) => {
+        console.log(solatLoading)
+        console.log(solatError)
         if (refresh) {
             clearLocation()
             setCurrentLocation(null)
@@ -77,6 +78,7 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
 
     useEffect(() => {
         handleUpdateLocation()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
 
     useEffect(() => {
@@ -109,8 +111,7 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
         if (currentLocation) {
             getSolat()
         }
-    }, [currentLocation])
-
+    }, [currentLocation, updateJadualSolat])
 
 
     return (

@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Solat.Today by drmsr",
   description: "Get the prayer times for your location - Grounded with JAKIM Malaysia Database",
   icons: {
