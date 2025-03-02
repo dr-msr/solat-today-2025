@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Solat Today
+
+A modern, responsive web application that provides accurate prayer times for Muslims in Malaysia. Built with Next.js and using official JAKIM Malaysia data.
+
+![Solat Today](https://solat.today/og.png)
+
+## Features
+
+- **Real-time Prayer Times**: Get accurate prayer times based on your current location
+- **Countdown Timer**: Visual countdown to the next prayer time
+- **Hijri Calendar**: Display current Hijri date alongside Gregorian calendar
+- **Multiple Day View**: Navigate through prayer times for different days
+- **Responsive Design**: Works seamlessly on mobile, tablet, and desktop devices
+- **JAKIM Official Data**: Uses official Malaysian Islamic Development Department data
+- **Offline Support**: Save your zone information for offline access
+- **Nearby Mosques**: Find mosques in your vicinity (coming soon)
+- **Qibla Direction**: Get accurate qibla direction from your location (coming soon)
+
+## Technology Stack
+
+- **Frontend**: Next.js 14, React, TypeScript, TailwindCSS
+- **UI Components**: Shadcn UI
+- **API**: Next.js API Routes with external JAKIM data integration
+- **Geolocation**: Browser Geolocation API
+- **Data Storage**: Local storage for offline capabilities
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Make sure to use the right node version
+nvm use node
+
+# Use pnpm as package manager
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then, run the development server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-## Learn More
+## Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+No environment variables are required to run the application locally.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application is designed to be deployed on Vercel for optimal performance:
 
-## Deploy on Vercel
+```bash
+pnpm build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contributions are welcome! Feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Credits
+
+- Prayer times data provided by [JAKIM Malaysia](https://www.e-solat.gov.my/)
+- Created by [drmsr](https://x.com/drmsr_dev)
+
+## Links
+
+- Website: [https://solat.today](https://solat.today)
+- GitHub Repository: [https://github.com/dr-msr/solat-today](https://github.com/dr-msr/solat-today)
