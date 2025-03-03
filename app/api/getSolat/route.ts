@@ -1,15 +1,22 @@
 import { getZonJakim } from '@/lib/solat/getZonJakim';
 import { NextRequest, NextResponse } from 'next/server';
+import bearing from '@/lib/solat/bearing.json'; 
 
 const JAKIM_URL = 'https://www.e-solat.gov.my/index.php?r=esolatApi/takwimsolat&period=week&zone=';
 const JAKIM_MOSQUE = 'https://www.e-solat.gov.my/index.php?r=esolatApi/nearestMosque&dist=3'
 const API_URL = 'https://api.waktusolat.app/v2/solat/';
 
+export type bearingQiblat = {
+  zone : string,
+  bearing : string,
+  bearing_degree : number
+}
+
 export type GetSolatResponses = {
     zon : ZonJakim,
     month : string,
     updatedAt : Date,
-    bearing : string,
+    bearing : number,
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
     masjid : any,
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -76,15 +83,8 @@ export async function GET(req: NextRequest) {
     const timetable = await result.json();
     const prayerTimes = timetable.prayers;
 
-    const api_url2 = JAKIM_URL + zon.code;
-    const result2 = await fetch(api_url2);
-    if (!result2.ok) {
-      return NextResponse.json(
-        { error: 'Failed to retrieve JAKIM times' },
-        { status: 500 }
-      );
-    }
-    const timetable2 = await result2.json();
+    const bearingQ  = bearing.find(bearing => bearing.zone === zon.code);
+
 
     const api_url3 = JAKIM_MOSQUE + '&lat=' + lat + '&long=' + lng;
 
@@ -101,7 +101,7 @@ export async function GET(req: NextRequest) {
         zon : zon,
         month : timetable.month,
         updatedAt : new Date(timetable.last_updated),
-        bearing : timetable2.bearing,
+        bearing : bearingQ?.bearing_degree || 0,
         masjid : mosque.locationData,
         prayerTimes : prayerTimes
     }

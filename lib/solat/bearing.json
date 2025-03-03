@@ -1,0 +1,258 @@
+[
+    {
+      "zone": "JHR01",
+      "bearing": "292&#176; 25&#8242; 40&#8243;",
+      "bearing_degree": 292.427778
+    },
+    {
+      "zone": "JHR02",
+      "bearing": "292&#176; 54&#8242; 30&#8243;",
+      "bearing_degree": 292.908333
+    },
+    {
+      "zone": "JHR03",
+      "bearing": "292&#176; 59&#8242; 18&#8243;",
+      "bearing_degree": 292.988333
+    },
+    {
+      "zone": "JHR04",
+      "bearing": "292&#176; 49&#8242;",
+      "bearing_degree": 292.816667
+    },
+    {
+      "zone": "KDH01",
+      "bearing": "291&#176; 5&#8242; 39&#8243;",
+      "bearing_degree": 291.094167
+    },
+    {
+      "zone": "KDH02",
+      "bearing": "291&#176; 7&#8242; 23&#8243;",
+      "bearing_degree": 291.123056
+    },
+    {
+      "zone": "KDH03",
+      "bearing": "291&#176; 10&#8242; 23&#8243;",
+      "bearing_degree": 291.173056
+    },
+    {
+      "zone": "KDH04",
+      "bearing": "291&#176; 7&#8242; 48&#8243;",
+      "bearing_degree": 291.13
+    },
+    {
+      "zone": "KDH05",
+      "bearing": "219",
+      "bearing_degree": 219.0
+    },
+    {
+      "zone": "KTN01",
+      "bearing": "291&#176; 6&#8242;",
+      "bearing_degree": 291.1
+    },
+    {
+      "zone": "MLK01",
+      "bearing": "292&#176; 50&#8242; 49&#8243;",
+      "bearing_degree": 292.846944
+    },
+    {
+      "zone": "NGS01",
+      "bearing": "292&#176; 33&#8242; 31&#8243;",
+      "bearing_degree": 292.558611
+    },
+    {
+      "zone": "NGS02",
+      "bearing": "292&#176; 48&#8242; 18&#8243;",
+      "bearing_degree": 292.805
+    },
+    {
+      "zone": "PHG01",
+      "bearing": "292&#176; 22&#8242; 32&#8243;",
+      "bearing_degree": 292.375556
+    },
+    {
+      "zone": "PHG02",
+      "bearing": "292&#176; 24&#8242; 36&#8243;",
+      "bearing_degree": 292.41
+    },
+    {
+      "zone": "PHG03",
+      "bearing": "292&#176; 19&#8242; 16&#8243;",
+      "bearing_degree": 292.321111
+    },
+    {
+      "zone": "PHG04",
+      "bearing": "292&#176; 7&#8242; 27&#8243;",
+      "bearing_degree": 292.124167
+    },
+    {
+      "zone": "PHG05",
+      "bearing": "292&#176; 15&#8242; 10&#8243;",
+      "bearing_degree": 292.252778
+    },
+    {
+      "zone": "PHG06",
+      "bearing": "291&#176; 55&#8242; 59&#8243;",
+      "bearing_degree": 291.933056
+    },
+    {
+      "zone": "PRK01",
+      "bearing": "291&#176; 50&#8242; 6&#8243;",
+      "bearing_degree": 291.835
+    },
+    {
+      "zone": "PRK02",
+      "bearing": "291&#176; 42&#8242;",
+      "bearing_degree": 291.7
+    },
+    {
+      "zone": "PRK03",
+      "bearing": "291&#176; 48&#8242; 0&#8243;",
+      "bearing_degree": 291.8
+    },
+    {
+      "zone": "PLS01",
+      "bearing": "291&#176; 2&#8242; 45&#8243;",
+      "bearing_degree": 291.045833
+    },
+    {
+      "zone": "PNG01",
+      "bearing": "291&#176; 34&#8242; 37&#8243;",
+      "bearing_degree": 291.576944
+    },
+    {
+      "zone": "SBH01",
+      "bearing": "290&#176; 44&#8242; 58&#8243;",
+      "bearing_degree": 290.749444
+    },
+    {
+      "zone": "SBH02",
+      "bearing": "290&#176; 48&#8242; 20&#8243;",
+      "bearing_degree": 290.805556
+    },
+    {
+      "zone": "SBH03",
+      "bearing": "290&#176; 51&#8242; 30&#8243;",
+      "bearing_degree": 290.858333
+    },
+    {
+      "zone": "SBH04",
+      "bearing": "290&#176; 59&#8242; 4&#8243;",
+      "bearing_degree": 290.984444
+    },
+    {
+      "zone": "SBH05",
+      "bearing": "290&#176; 24&#8242; 31&#8243;",
+      "bearing_degree": 290.408611
+    },
+    {
+      "zone": "SBH06",
+      "bearing": "290&#176; 35&#8242; 48&#8243;",
+      "bearing_degree": 290.596667
+    },
+    {
+      "zone": "SBH07",
+      "bearing": "290&#176; 40&#8242; 37&#8243;",
+      "bearing_degree": 290.676944
+    },
+    {
+      "zone": "SBH08",
+      "bearing": "290&#176; 46&#8242; 36&#8243;",
+      "bearing_degree": 290.776667
+    },
+    {
+      "zone": "SBH09",
+      "bearing": "290&#176; 50&#8242; 27&#8243;",
+      "bearing_degree": 290.840833
+    },
+    {
+      "zone": "SWK01",
+      "bearing": "290&#176; 55&#8242; 36&#8243;",
+      "bearing_degree": 290.926667
+    },
+    {
+      "zone": "SWK02",
+      "bearing": "291&#176; 11&#8242; 56&#8243;",
+      "bearing_degree": 291.198889
+    },
+    {
+      "zone": "SWK03",
+      "bearing": "291&#176; 31&#8242; 8&#8243;",
+      "bearing_degree": 291.518889
+    },
+    {
+      "zone": "SWK04",
+      "bearing": "291&#176; 36&#8242; 33&#8243;",
+      "bearing_degree": 291.609167
+    },
+    {
+      "zone": "SWK05",
+      "bearing": "291&#176; 49&#8242; 38&#8243;",
+      "bearing_degree": 291.827222
+    },
+    {
+      "zone": "SWK06",
+      "bearing": "291&#176; 58&#8242; 20&#8243;",
+      "bearing_degree": 291.972222
+    },
+    {
+      "zone": "SWK07",
+      "bearing": "292&#176; 7&#8242; 47&#8243;",
+      "bearing_degree": 292.129722
+    },
+    {
+      "zone": "SWK08",
+      "bearing": "292&#176; 5&#8242; 26&#8243;",
+      "bearing_degree": 292.090556
+    },
+    {
+      "zone": "SWK09",
+      "bearing": "292&#176; 5&#8242; 26&#8243;",
+      "bearing_degree": 292.090556
+    },
+    {
+      "zone": "SGR01",
+      "bearing": "291&#176; 7&#8242; 23&#8243;",
+      "bearing_degree": 291.123056
+    },
+    {
+      "zone": "SGR02",
+      "bearing": "292&#176; 20&#8242; 35&#8243;",
+      "bearing_degree": 292.343056
+    },
+    {
+      "zone": "SGR03",
+      "bearing": "292&#176; 31&#8242; 16&#8243;",
+      "bearing_degree": 292.521111
+    },
+    {
+      "zone": "TRG01",
+      "bearing": "291&#176; 23&#8242; 2&#8243;",
+      "bearing_degree": 291.383889
+    },
+    {
+      "zone": "TRG02",
+      "bearing": "291&#176; 21&#8242; 20&#8243;",
+      "bearing_degree": 291.355556
+    },
+    {
+      "zone": "TRG03",
+      "bearing": "291&#176; 32&#8242; 40&#8243;",
+      "bearing_degree": 291.544444
+    },
+    {
+      "zone": "TRG04",
+      "bearing": "291&#176; 44&#8242; 46&#8243;",
+      "bearing_degree": 291.746111
+    },
+    {
+      "zone": "WLY01",
+      "bearing": "292&#176; 31&#8242; 16&#8243;",
+      "bearing_degree": 292.521111
+    },
+    {
+      "zone": "WLY02",
+      "bearing": "290&#176; 47&#8242; 30&#8243;",
+      "bearing_degree": 290.791667
+    }
+  ]
+  

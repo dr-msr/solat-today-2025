@@ -84,6 +84,7 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
     useEffect(() => {
         const getSolat = async () => {
             if (!currentLocation) return;
+            if (savedLocation) return;
 
             try {
                 setSolatLoading(true)
@@ -93,7 +94,7 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
 
                 if (!res.ok) {
                     const errorData = await res.json()
-                    throw new Error(errorData.error || 'Failed to fetch prayer times')
+                    throw new Error(errorData.error)
                 }
 
                 const data: GetSolatResponses = await res.json()
@@ -111,7 +112,8 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
         if (currentLocation) {
             getSolat()
         }
-    }, [currentLocation, updateJadualSolat])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [currentLocation])
 
 
     return (
