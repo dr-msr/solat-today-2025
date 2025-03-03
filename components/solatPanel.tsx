@@ -127,7 +127,6 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
                 <div className="mx-4 border py-2 px-8 rounded-lg mt-4 flex flex-row items-center justify-between gap-2 text-muted-foreground text-sm">
                     <MinusCircle size={16} className="cursor-pointer hover:text-blue-500" onClick={handleDecrementIndex} />
                     <div className="flex flex-col">
-                        <div>{new Date(new Date().setDate(new Date().getDate() + (index - 2))).toLocaleString('default', { weekday: 'long', day: 'numeric', month: 'long' })}</div>
                         <div>{formatHijri(jadualSolat.prayerTimes[index].hijri)}</div>
                     </div>
                     <PlusCircle size={16} className="cursor-pointer hover:text-blue-500" onClick={handleIncrementIndex} />
