@@ -2,7 +2,6 @@ import { getZonJakim } from '@/lib/solat/getZonJakim';
 import { NextRequest, NextResponse } from 'next/server';
 import bearing from '@/lib/solat/bearing.json'; 
 
-const JAKIM_URL = 'https://www.e-solat.gov.my/index.php?r=esolatApi/takwimsolat&period=week&zone=';
 const JAKIM_MOSQUE = 'https://www.e-solat.gov.my/index.php?r=esolatApi/nearestMosque&dist=3'
 const API_URL = 'https://api.waktusolat.app/v2/solat/';
 
