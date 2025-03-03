@@ -36,6 +36,7 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
             setJadualSolat(null)
             setSolatError(null)
             setLocationLoading(true)
+            updateJadualSolat(null)
         }
 
         if (location.loading) {
@@ -84,7 +85,7 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
     useEffect(() => {
         const getSolat = async () => {
             if (!currentLocation) return;
-            if (savedLocation) return;
+            if (jadualSolat) return;
 
             try {
                 setSolatLoading(true)
