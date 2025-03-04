@@ -17,6 +17,7 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
     })
     const [timerCountdown, setTimerCountdown] = useState('');
     const [pulsateClass, setPulsateClass] = useState('pulsate-indigo');
+    const [displayDay, setDisplayDay] = useState<Date>(new Date())
 
     function convertTime(time: number) {
         const date = new Date(time * 1000);
@@ -87,12 +88,36 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
         if (jadualSolat.prayerTimes && jadualSolat.prayerTimes.length > index + 1) {
             setIndex(prev => prev + 1);
         }
+        
+        // Create a new Date object to avoid mutating the original state
+        const newDate = new Date(displayDay);
+        const currentMonth = newDate.getMonth();
+        
+        // Increment the date
+        newDate.setDate(newDate.getDate() + 1);
+        
+        // Only update if we're still in the same month
+        if (newDate.getMonth() === currentMonth) {
+            setDisplayDay(newDate);
+        }
     };
 
     // Function to handle decreasing the index
     const handleDecrementIndex = () => {
         if (index > 0) {
             setIndex(prev => prev - 1);
+        }
+        
+        // Create a new Date object to avoid mutating the original state
+        const newDate = new Date(displayDay);
+        const currentMonth = newDate.getMonth();
+        
+        // Decrement the date
+        newDate.setDate(newDate.getDate() - 1);
+        
+        // Only update if we're still in the same month
+        if (newDate.getMonth() === currentMonth) {
+            setDisplayDay(newDate);
         }
     };
 
@@ -125,7 +150,7 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
                 <div className="mx-4 border py-2 px-8 rounded-lg mt-4 flex flex-row items-center justify-between gap-2 text-muted-foreground text-sm">
                     <MinusCircle size={20} className="cursor-pointer hover:text-blue-500" onClick={handleDecrementIndex} />
                     <div className="flex flex-col">
-                        <div>{currentTime?.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}</div>
+                        <div>{displayDay.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}</div>
                         <div>{formatHijri(jadualSolat.prayerTimes[index].hijri)}</div>
                     </div>
                     <PlusCircle size={20} className="cursor-pointer hover:fill-current" onClick={handleIncrementIndex} />
