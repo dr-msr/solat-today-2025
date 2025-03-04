@@ -124,3 +124,45 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes pulsate-red {
+  100%, 10% {
+    color: rgb(0, 0, 0); /* black */
+  }
+  10% {
+    color: rgb(239, 68, 68); /* red-500 */
+  }
+  50% {
+    color: rgb(0, 0, 0); /* black */
+  }
+}
+
+@keyframes pulsate-orange {
+  100%, 10% {
+    color: rgb(0, 0, 0); /* black */
+  }
+  10% {
+    color: rgb(220, 92, 0); /* orange-500 */
+  }
+  50% {
+    color: rgb(0, 0, 0); /* black */
+  }
+}
+
+.pulsate {
+  animation: pulsate 1s ease-in-out infinite;
+}
+
+
+.pulsate-red {
+  animation: pulsate-red 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* .pulsate-orange {
+  animation: pulsate-orange 1s ease-in-out infinite;
+} */
+
+.pulsate-orange {
+  animation: pulsate-orange 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+

@@ -14,13 +14,12 @@ export default function Home() {
   const handleUpdateJadualSolat = (jadualSolat: GetSolatResponses | null) => {
     setCurrentJadualSolat(jadualSolat)
     updateJadualSolat(jadualSolat)
-    console.log("Jadual Solat Updated")
   }
 
   useEffect(() => {
     if (jadualSolat != undefined) {
       setCurrentJadualSolat(jadualSolat)
-      console.log("Jadual Solat Updated", jadualSolat)
+      console.log("Jadual Solat Updated at " + new Date())
     }
   }, [jadualSolat])
 

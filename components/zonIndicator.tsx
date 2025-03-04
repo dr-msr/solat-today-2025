@@ -16,6 +16,7 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
     const [savedLocation, updateLocation, clearLocation] = useLocalStorage('location')
     const location: GeoLocationSensorState = useGeolocation({
         enableHighAccuracy: true,
+        maximumAge: 300000,
     })
     const [currentLocation, setCurrentLocation] = useState<{
         lat: number,
@@ -28,8 +29,7 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
     const [solatError, setSolatError] = useState<string | null>(null)
 
     const handleUpdateLocation = (refresh?: boolean) => {
-        console.log(solatLoading)
-        console.log(solatError)
+        console.log('Updating location at ' + new Date())
         if (refresh) {
             clearLocation()
             setCurrentLocation(null)
@@ -85,7 +85,6 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
     useEffect(() => {
         const getSolat = async () => {
             if (!currentLocation) return;
-            if (jadualSolat) return;
 
             try {
                 setSolatLoading(true)

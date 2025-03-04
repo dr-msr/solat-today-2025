@@ -17,12 +17,11 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
     })
     const [timerCountdown, setTimerCountdown] = useState('');
     const [statusCountdown, setStatusCountdown] = useState('');
-
+    const [pulsateClass, setPulsateClass] = useState('pulsate-indigo');
 
     function convertTime(time: number) {
         const date = new Date(time * 1000);
         const localTimeString = date.toLocaleTimeString(undefined, { hour12: true, hour: 'numeric', minute: 'numeric' });
-        console.log(statusCountdown)
         return localTimeString;
     }
 
@@ -40,12 +39,15 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
         setTimerCountdown(formattedHours + ":" + formattedMinutes + ":" + formattedSeconds);
 
         if (hours > 0) {
-            setStatusCountdown('indigo')
+            setStatusCountdown('indigo');
+            setPulsateClass('pulsate-indigo-slow');
         } else {
             if (minutes <= 15) {
-                setStatusCountdown('red')
+                setStatusCountdown('red');
+                setPulsateClass('pulsate-red');
             } else {
-                setStatusCountdown('orange')
+                setStatusCountdown('orange');
+                setPulsateClass('pulsate-orange');
             }
         }
     }
@@ -109,7 +111,7 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
             <div className="p-4 flex justify-center items-between border-b">
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6, justifyContent: 'space-between', alignItems: 'center' }}>
                     <div className="text-sm">{currentTime ? currentTime.toLocaleString('default', { weekday: 'long', day: 'numeric', month: 'long' }) + ' - ' + currentTime.toLocaleTimeString(undefined, { hour12: true }) : 'Loading..'} </div>
-                    <div className="text-5xl font-bold mb-1">{timerCountdown}</div>
+                    <div className={`text-5xl font-bold mb-1 ${pulsateClass}`}>{timerCountdown}</div>
                 </div>
             </div>
             <div className="p-4 flex justify-center items-between border-b bg-gray-50">
@@ -122,14 +124,15 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
                 <h4 className="font-semibold text-left mr-auto">Hijri</h4>
                 <p className="text-gray-700">{formatHijri(jadualSolat.prayerTimes[new Date().getDay() + 1].hijri)}</p>
             </div>
-            <div className="p-4 flexborder-b bg-gray-50 rounded-b-lg">
+            <div className="p-4 flexborder-b bg-white rounded-b-lg">
                 <h4 className="font-semibold text-left">All Prayers</h4>
                 <div className="mx-4 border py-2 px-8 rounded-lg mt-4 flex flex-row items-center justify-between gap-2 text-muted-foreground text-sm">
-                    <MinusCircle size={16} className="cursor-pointer hover:text-blue-500" onClick={handleDecrementIndex} />
+                    <MinusCircle size={20} className="cursor-pointer hover:text-blue-500" onClick={handleDecrementIndex} />
                     <div className="flex flex-col">
+                        <div>{currentTime?.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}</div>
                         <div>{formatHijri(jadualSolat.prayerTimes[index].hijri)}</div>
                     </div>
-                    <PlusCircle size={16} className="cursor-pointer hover:text-blue-500" onClick={handleIncrementIndex} />
+                    <PlusCircle size={20} className="cursor-pointer hover:fill-current" onClick={handleIncrementIndex} />
                 </div>
                 <pre className="mx-4 border text-black font-mono text-left py-2 px-8 rounded-lg mt-1 text-sm leading-6">
                     <p className="flex flex-row justify-between">
