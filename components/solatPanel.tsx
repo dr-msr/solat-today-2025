@@ -16,7 +16,6 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
         time: "",
     })
     const [timerCountdown, setTimerCountdown] = useState('');
-    const [statusCountdown, setStatusCountdown] = useState('');
     const [pulsateClass, setPulsateClass] = useState('pulsate-indigo');
 
     function convertTime(time: number) {
@@ -39,14 +38,11 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
         setTimerCountdown(formattedHours + ":" + formattedMinutes + ":" + formattedSeconds);
 
         if (hours > 0) {
-            setStatusCountdown('indigo');
             setPulsateClass('pulsate-indigo-slow');
         } else {
             if (minutes <= 15) {
-                setStatusCountdown('red');
                 setPulsateClass('pulsate-red');
             } else {
-                setStatusCountdown('orange');
                 setPulsateClass('pulsate-orange');
             }
         }
