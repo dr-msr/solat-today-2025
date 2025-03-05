@@ -176,7 +176,7 @@ export default function Home() {
                     isAlignedWithQiblat() ? "bg-green-600 hover:bg-green-700" : "bg-gray-600 hover:bg-gray-700"
                   )}
                 >
-                  {getCompassHeading() !== null ? `${getCompassHeading()}°` : '270°'}
+                  {getCompassHeading() !== null ? `${getCompassHeading()}°` : '-'}
                 </Badge></div>
               </TabsTrigger>
               <TabsTrigger value="masjid" className="px-2">Mosques</TabsTrigger>
