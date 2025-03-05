@@ -131,8 +131,6 @@ export default function CalibrateCompass({ updateReading }: CalibrateCompassProp
 
             {!isCalibrationNeeded && calibrationConfidence === 'high' && readings.length >= 5 && (
                 <div className="p-2 mt-2 bg-green-50 border border-green-200 rounded-md flex items-center gap-3">
-                    <CheckCircle2 className="text-green-600 h-4 w-4 shrink-0" />
-                    <p className="text-xs text-green-700">Compass accuracy is good</p>
                 </div>
             )}
 
