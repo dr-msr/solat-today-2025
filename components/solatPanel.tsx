@@ -5,10 +5,11 @@ import Link from "next/link"
 import { useState } from "react"
 
 interface SolatPanelProps {
+    updateTimer : (timer: string | null) => void
     jadualSolat: GetSolatResponses
 }
 
-const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
+const SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
     const [currentTime, setCurrentTime] = useState<Date | null>(null)
     const [index, setIndex] = useState<number>(new Date().getDay() + 1)
     const [nextPrayer, setNextPrayer] = useState({
@@ -37,7 +38,10 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
         const formattedSeconds = seconds.toString().padStart(2, '0');
 
         setTimerCountdown(formattedHours + ":" + formattedMinutes + ":" + formattedSeconds);
-
+        const currentPrayer = getCurrentPrayer();
+        if (currentPrayer != undefined) {
+            updateTimer(currentPrayer);
+        }
         if (hours > 0) {
             setPulsateClass('pulsate-indigo-slow');
         } else {
@@ -45,6 +49,28 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
                 setPulsateClass('pulsate-red');
             } else {
                 setPulsateClass('pulsate-orange');
+            }
+        }
+    }
+
+    function getCurrentPrayer() {
+        const today = (new Date().getDate()) - 1
+
+        if (currentTime != undefined && jadualSolat.prayerTimes[0] != undefined) {
+            const comparedTime = currentTime.getTime() / 1000;
+
+            if (comparedTime > jadualSolat.prayerTimes[today].fajr && comparedTime <= jadualSolat.prayerTimes[today].dhuhr) {
+                return "Dhuhr"
+            } else if (comparedTime > jadualSolat.prayerTimes[today].dhuhr && comparedTime <= jadualSolat.prayerTimes[today].asr) {
+                return "Asr"
+            } else if (comparedTime > jadualSolat.prayerTimes[today].asr && comparedTime <= jadualSolat.prayerTimes[today].maghrib) {
+                return "Maghrib"
+            } else if (comparedTime > jadualSolat.prayerTimes[today].maghrib && comparedTime <= jadualSolat.prayerTimes[today].isha) {
+                return "Isha"
+            } else if (comparedTime > jadualSolat.prayerTimes[today].isha && comparedTime <= jadualSolat.prayerTimes[today + 1].fajr) {
+                return "Fajr"
+            } else if (comparedTime > jadualSolat.prayerTimes[today - 1].isha && comparedTime <= jadualSolat.prayerTimes[today + 1].fajr) {
+                return "Isha"
             }
         }
     }
@@ -144,6 +170,10 @@ const SolatPanel = ({ jadualSolat }: SolatPanelProps) => {
             <div className="p-4 flex justify-center items-between border-b bg-gray-50">
                 <h4 className="font-semibold text-left mr-auto">Hijri</h4>
                 <p className="text-gray-700">{formatHijri(jadualSolat.prayerTimes[new Date().getDay() + 1].hijri)}</p>
+            </div>
+            <div className="p-4 flex justify-center items-between border-b bg-gray-50">
+                <h4 className="font-semibold text-left mr-auto">Qiblat Bearing</h4>
+                <p className="text-gray-700">{jadualSolat.bearing.toFixed(2)}°</p>
             </div>
             <div className="p-4 flexborder-b bg-white rounded-b-lg">
                 <h4 className="font-semibold text-left">All Prayers</h4>
