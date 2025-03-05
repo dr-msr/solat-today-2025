@@ -3,9 +3,9 @@
 import { GetSolatResponses } from "@/app/api/getSolat/route";
 import { CircleX, RefreshCcwIcon } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import { PuffLoader } from "react-spinners";
 import { useGeolocation, useLocalStorage } from "react-use";
 import { GeoLocationSensorState } from "react-use/lib/useGeolocation";
-import { PuffLoader } from "react-spinners";
 
 interface ZonIndicatorProps {
     updateJadualSolat  : (jadualSolat: GetSolatResponses | null) => void
@@ -13,7 +13,7 @@ interface ZonIndicatorProps {
 
 const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
     const [savedLocation, updateLocation, clearLocation] = useLocalStorage('location')
-    const location: GeoLocationSensorState = useGeolocation({
+    const location : GeoLocationSensorState = useGeolocation({
         enableHighAccuracy: true,
         maximumAge: 300000, // 5 minutes
     })
