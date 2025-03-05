@@ -9,6 +9,17 @@ interface DeviceOrientationState {
   absolute: boolean;
 }
 
+
+export const isAlignedWithQiblat = ({ bearing, heading }: { bearing: number, heading: number }) => {
+    const tolerance = 1; // degrees of tolerance
+    
+    const diff = Math.abs(heading - bearing);
+    // Handle the case of angles near 0/360 boundary
+    const normalizedDiff = Math.min(diff, 360 - diff);
+    
+    return normalizedDiff <= tolerance;
+  };
+
 // Define an extended interface for DeviceOrientationEvent including requestPermission
 interface DeviceOrientationEventExtended extends DeviceOrientationEvent {
   requestPermission?: () => Promise<"granted" | "denied">;

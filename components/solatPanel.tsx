@@ -59,16 +59,18 @@ const SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
         if (currentTime != undefined && jadualSolat.prayerTimes[0] != undefined) {
             const comparedTime = currentTime.getTime() / 1000;
 
-            if (comparedTime > jadualSolat.prayerTimes[today].fajr && comparedTime <= jadualSolat.prayerTimes[today].dhuhr) {
-                return "Dhuhr"
-            } else if (comparedTime > jadualSolat.prayerTimes[today].dhuhr && comparedTime <= jadualSolat.prayerTimes[today].asr) {
-                return "Asr"
-            } else if (comparedTime > jadualSolat.prayerTimes[today].asr && comparedTime <= jadualSolat.prayerTimes[today].maghrib) {
-                return "Maghrib"
-            } else if (comparedTime > jadualSolat.prayerTimes[today].maghrib && comparedTime <= jadualSolat.prayerTimes[today].isha) {
-                return "Isha"
-            } else if (comparedTime > jadualSolat.prayerTimes[today].isha && comparedTime <= jadualSolat.prayerTimes[today + 1].fajr) {
+            if (comparedTime > jadualSolat.prayerTimes[today].fajr && comparedTime <= jadualSolat.prayerTimes[today].syuruk) {
                 return "Fajr"
+            } else if (comparedTime > jadualSolat.prayerTimes[today].syuruk && comparedTime <= jadualSolat.prayerTimes[today].dhuhr) {
+                return "Dhuha"
+            } else if (comparedTime > jadualSolat.prayerTimes[today].dhuhr && comparedTime <= jadualSolat.prayerTimes[today].asr) {
+                return "Zuhr"
+            } else if (comparedTime > jadualSolat.prayerTimes[today].asr && comparedTime <= jadualSolat.prayerTimes[today].maghrib) {
+                return "Asr"
+            } else if (comparedTime > jadualSolat.prayerTimes[today].maghrib && comparedTime <= jadualSolat.prayerTimes[today].isha) {
+                return "Maghrib"
+            } else if (comparedTime > jadualSolat.prayerTimes[today].isha && comparedTime <= jadualSolat.prayerTimes[today + 1].fajr) {
+                return "Isha"
             } else if (comparedTime > jadualSolat.prayerTimes[today - 1].isha && comparedTime <= jadualSolat.prayerTimes[today + 1].fajr) {
                 return "Isha"
             }
