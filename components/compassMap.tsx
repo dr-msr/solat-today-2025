@@ -25,7 +25,7 @@ const CompassMap = ({ compassReading, qiblatReading, lat, lng }: CompassMapProps
 
     return (
         <div className="border border-gray-300 bg-white rounded-lg shadow-lg w-full p-4 flex flex-col items-center gap-4">
-            <div className="w-full max-w-md flex flex-col items-center text-sm">
+            <div className="w-full max-w-md flex flex-col items-center text-xs">
                 <div className={`${compassReading == 0 ? 'text-muted-foreground' : ''}`}>Put your phone on a level surface, pointing North direction.</div>
                 <div className={`${compassReading != 0 ? 'text-muted-foreground' : ''}`}><Dialog>
                 <DialogTrigger><span className="underline mr-1">Calibrate</span></DialogTrigger>
