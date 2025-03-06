@@ -41,7 +41,6 @@ export default function Home() {
           <h1 className="text-3xl sm:text-5xl font-bold relative">Solat Today</h1>
         </div>
         <ZonIndicator updateJadualSolat={(jadualSolat) => handleUpdateJadualSolat(jadualSolat)} />
-        <CalibrateCompass updateReading={(reading : number) => updateCompassReading(reading)}  />
         {currentJadualSolat != null &&
           <Tabs defaultValue="solat" className="w-full">
 
@@ -100,7 +99,10 @@ export default function Home() {
               </TabsTrigger>
               <TabsTrigger value="masjid" className="px-2">Mosques</TabsTrigger>
             </TabsList>
+            <CalibrateCompass updateReading={(reading : number) => updateCompassReading(reading)}  />
+
           </Tabs>
+          
 
 
         }

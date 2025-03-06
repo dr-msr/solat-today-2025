@@ -174,7 +174,7 @@ const SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
                 <p className="text-gray-700">{formatHijri(jadualSolat.prayerTimes[new Date().getDay() + 1].hijri)}</p>
             </div>
             <div className="p-4 flex justify-center items-between border-b bg-gray-50">
-                <h4 className="font-semibold text-left mr-auto">Qiblat Bearing</h4>
+                <h4 className="font-semibold text-left mr-auto">Qiblat Azimuth</h4>
                 <p className="text-gray-700">{jadualSolat.bearing.toFixed(2)}°</p>
             </div>
             <div className="p-4 flexborder-b bg-white rounded-b-lg">

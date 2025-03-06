@@ -3,13 +3,21 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { AlertTriangle, CheckCircle2, RotateCcw } from "lucide-react";
+import { AlertTriangle, CheckCircle2, MapPinCheckInside, MapPinHouseIcon, RotateCcw } from "lucide-react";
 import useDeviceOrientation from "@/lib/heading";
 
 // Number of readings to track for stability analysis
 const READING_HISTORY_SIZE = 10;
 // Threshold for average variation that triggers calibration warning (in degrees)
 const VARIATION_THRESHOLD = 15;
+
+const DEBUG : "default" | "calibrate" | null = "default"
+
+const status = [
+    "Qiblat accuracy relies on your device's compass.",
+    "Move away from any electronic devices to minimize interference.",
+    "Accuracy is low if you are inside a building or in a moving car."
+]
 
 interface CalibrateCompassProps {
     updateReading: (reading: number) => void;
@@ -22,6 +30,30 @@ export default function CalibrateCompass({ updateReading }: CalibrateCompassProp
     const [calibrationConfidence, setCalibrationConfidence] = useState<'high' | 'medium' | 'low' | null>(null);
     const [showCalibrationGuide, setShowCalibrationGuide] = useState(false);
     const [lastCheckedTime, setLastCheckedTime] = useState(0);
+    const [statusIndex, setStatusIndex] = useState(0);
+    const [isTransitioning, setIsTransitioning] = useState(false);
+    const [visibleStatus, setVisibleStatus] = useState(status[0]);
+
+useEffect(() => {
+    const statusInterval = setInterval(() => {
+        // Start fade out
+        setIsTransitioning(true);
+        
+        // After fade out completes, change content and fade back in
+        setTimeout(() => {
+            const nextIndex = (statusIndex + 1) % status.length;
+            setStatusIndex(nextIndex);
+            setVisibleStatus(status[nextIndex]);
+            
+            // Start fade in
+            setTimeout(() => {
+                setIsTransitioning(false);
+            }, 50);
+        }, 300); // This duration should match the fade-out transition time
+    }, 10000);
+    
+    return () => clearInterval(statusInterval);
+}, [statusIndex]);
 
     // Track compass readings over time
     useEffect(() => {
@@ -103,7 +135,7 @@ export default function CalibrateCompass({ updateReading }: CalibrateCompassProp
 
     return (
         <>
-            {isCalibrationNeeded && (
+            {(isCalibrationNeeded || (DEBUG == "calibrate")) && (
                 <div className="p-4 mt-2 bg-yellow-50 border border-yellow-200 rounded-md flex items-center gap-3">
                     <AlertTriangle className="text-yellow-600 shrink-0" />
                     <div className="flex-1">
@@ -129,8 +161,17 @@ export default function CalibrateCompass({ updateReading }: CalibrateCompassProp
                 </div>
             )}
 
-            {!isCalibrationNeeded && calibrationConfidence === 'high' && readings.length >= 5 && (
-                <div className="p-2 mt-2 bg-green-50 border border-green-200 rounded-md flex items-center gap-3">
+            {((!isCalibrationNeeded && calibrationConfidence === 'high' && readings.length >= 5) || (DEBUG == "default")) && (
+                <div className="px-4 p-2 mt-2 bg-grey-50 border border-grey-200 rounded-md flex items-center gap-3">
+                    <div className="flex items-center justify-center gap-2">
+                    <div 
+  className={`flex flex-row  gap-2 text-xs text-grey-500 transition-opacity duration-300 ease-in-out ${
+    isTransitioning ? 'opacity-0' : 'opacity-100'
+  }`}
+>
+<MapPinHouseIcon className="text-grey-500 h-4 w-4 shrink-0" />
+{visibleStatus}
+</div>                    </div>
                 </div>
             )}
 
