@@ -59,15 +59,15 @@ export default function Home() {
             </TabsContent>
             <TabsContent value="kiblat" className="w-full">
                 {(compassReading != null && currentPosition != null) && (
-                  <Map compassReading={compassReading} lat={currentPosition.lat} lng={currentPosition.lng} />
+                  <Map compassReading={compassReading} lat={currentPosition.lat} lng={currentPosition.lng} qiblatReading={currentJadualSolat.bearing} />
                 )}
             </TabsContent>
             <TabsContent value="masjid">Coming Soon</TabsContent>
             <TabsList className="w-full flex flex-row border border-gray-300 bg-white rounded-lg shadow-lg w-full items-center justify-evenly p-2">
               <TabsTrigger value="solat" className="w-full px-2">
                 <div>Current Prayer <Badge>{timer}</Badge></div></TabsTrigger>
-                { compassReading && (<TabsTrigger value="kiblat" className="w-full px-2">
-                <div>Qiblat <Badge 
+                { compassReading != null && (<TabsTrigger value="kiblat" className="w-full px-2">
+                <div>{ (isAlignedWithQiblat({ bearing: currentJadualSolat.bearing, heading: compassReading! })) ? "Qiblat " : "Compass " }<Badge 
                   variant="destructive" 
                   className={cn(
                     isAlignedWithQiblat({ bearing: currentJadualSolat.bearing, heading: compassReading! }) ? "bg-green-600 hover:bg-green-700" : "bg-gray-600 hover:bg-gray-700"
