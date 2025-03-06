@@ -166,3 +166,21 @@
   animation: pulsate-orange 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+.compass-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1000; /* High z-index to ensure it's above the map */
+}

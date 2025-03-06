@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { AlertTriangle, CheckCircle2, MapPinCheckInside, MapPinHouseIcon, RotateCcw } from "lucide-react";
+import { AlertTriangle, MapPinHouseIcon, RotateCcw } from "lucide-react";
 import useDeviceOrientation from "@/lib/heading";
 
 // Number of readings to track for stability analysis

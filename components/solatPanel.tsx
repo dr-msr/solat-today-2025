@@ -1,6 +1,6 @@
 import { GetSolatResponses } from "@/app/api/getSolat/route"
 import { formatHijri } from "@/lib/utils"
-import { MinusCircle, PlusCircle } from "lucide-react"
+import { ExternalLink, MinusCircle, PlusCircle } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -193,6 +193,10 @@ const SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
                         {convertTime(jadualSolat.prayerTimes[index].fajr)}
                     </p>
                     <p className="flex flex-row justify-between">
+                        <strong>{'Syuruk : '}</strong>
+                        {convertTime(jadualSolat.prayerTimes[index].syuruk)}
+                    </p>
+                    <p className="flex flex-row justify-between">
                         <strong>{'Dhuhr : '}</strong>
                         {convertTime(jadualSolat.prayerTimes[index].dhuhr)}
                     </p>
@@ -210,7 +214,7 @@ const SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
                     </p>
                 </pre>
                 <div className="mx-4 border py-2 px-8 rounded-lg mt-1 flex flex-row items-center justify-center gap-2 text-muted-foreground text-sm">
-                <Link href={"https://www.e-solat.gov.my/index.php"} target="_blank">{jadualSolat.zon.code} : {jadualSolat.zon.district}</Link>				
+                <div>{jadualSolat.zon.code} : {jadualSolat.zon.district}</div> <Link href={"https://www.e-solat.gov.my/index.php"} target="_blank"><ExternalLink size={14} /></Link>				
                 </div>
             </div>
         </div>

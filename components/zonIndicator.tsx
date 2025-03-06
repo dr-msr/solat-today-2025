@@ -9,9 +9,10 @@ import { GeoLocationSensorState } from "react-use/lib/useGeolocation";
 
 interface ZonIndicatorProps {
     updateJadualSolat  : (jadualSolat: GetSolatResponses | null) => void
+    updateCurrentPosition : (position: {lat: number, lng: number} | null) => void
 }
 
-const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
+const ZonIndicator = ({ updateJadualSolat, updateCurrentPosition }: ZonIndicatorProps) => {
     const [savedLocation, updateLocation, clearLocation] = useLocalStorage('location')
     const location : GeoLocationSensorState = useGeolocation({
         enableHighAccuracy: true,
@@ -63,6 +64,10 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
                         lat: data.lat,
                         lng: data.lng
                     })
+                    updateCurrentPosition({
+                        lat: data.lat,
+                        lng: data.lng
+                    })
                 }
                 return
             }
@@ -105,6 +110,7 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
                     setCurrentLocation(newCoord)
                     setLocationLoading(false)
                     setLocationError(null)
+                    updateCurrentPosition(newCoord)
                     
                     // Only update lastCoordinatesRef when we actually change the location
                     lastCoordinatesRef.current = newCoord
@@ -170,6 +176,8 @@ const ZonIndicator = ({ updateJadualSolat }: ZonIndicatorProps) => {
 
         if (currentLocation) {
             getSolat()
+            updateCurrentPosition(currentLocation)
+
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentLocation])
