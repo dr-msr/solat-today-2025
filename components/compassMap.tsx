@@ -43,7 +43,7 @@ const CompassMap = ({ compassReading, lat, lng }: CompassMapProps) => {
       className="absolute w-0.5 h-30 bg-black"
       style={{
         transformOrigin: 'bottom center',
-        transform: `rotate(-${compassReading}deg)`,
+        transform: `rotate(${compassReading}deg)`,
         bottom: '50%',
         left: 'calc(50% - 0.5px)'
       }}
