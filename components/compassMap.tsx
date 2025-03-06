@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css"
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 import { Badge } from "./ui/badge"
-import { Alert, AlertTitle } from "./ui/alert"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 
 interface CompassMapProps {
     qiblatReading: number
@@ -25,11 +25,53 @@ const CompassMap = ({ compassReading, qiblatReading, lat, lng }: CompassMapProps
 
     return (
         <div className="border border-gray-300 bg-white rounded-lg shadow-lg w-full p-4 flex flex-col items-center gap-4">
-            <div className="w-full">
-            <Alert>
-      <AlertTitle className={`${compassReading == 0 ? 'text-muted-foreground' : ''}`}>Calibrate & align your compass to the North.</AlertTitle>
-      <AlertTitle className={`${compassReading != 0 ? 'text-muted-foreground' : ''}`}>Your Qiblat is on the green line direction.</AlertTitle>
-    </Alert>
+            <div className="w-full max-w-md flex flex-col items-center text-sm">
+                <div className={`${compassReading == 0 ? 'text-muted-foreground' : ''}`}>Put your phone on a level surface, pointing North direction.</div>
+                <div className={`${compassReading != 0 ? 'text-muted-foreground' : ''}`}><Dialog>
+                <DialogTrigger><span className="underline mr-1">Calibrate</span></DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>How to Calibrate Your Compass</DialogTitle>
+                        <DialogDescription>
+                            Follow these steps to improve your compass accuracy.
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="grid gap-4 py-4">
+                        <div className="flex flex-col gap-2">
+                            <div className="flex gap-2 items-center">
+                                <div className="bg-blue-100 text-blue-800 rounded-full w-6 h-6 flex items-center justify-center font-semibold">1</div>
+                                <span>Move away from electronic devices and metal objects</span>
+                            </div>
+                            <div className="flex gap-2 items-center">
+                                <div className="bg-blue-100 text-blue-800 rounded-full w-6 h-6 flex items-center justify-center font-semibold">2</div>
+                                <span>Hold your phone and trace a figure-8 pattern in the air several times</span>
+                            </div>
+                            <div className="flex gap-2 items-center">
+                                <div className="bg-blue-100 text-blue-800 rounded-full w-6 h-6 flex items-center justify-center font-semibold">3</div>
+                                <span>Rotate your device in all three axes</span>
+                            </div>
+                        </div>
+
+                        <div className="relative border rounded-lg p-4 mt-2">
+                            <div className="flex justify-center items-center flex-col">
+                                <div className="text-4xl mb-3">∞</div>
+                                <div className="text-sm text-center text-gray-500">
+                                    Figure-8 pattern is most effective for compass calibration
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <DialogFooter>
+                        <DialogClose>
+                            I Have Done This
+                        </DialogClose>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+  if your building or surrounding is not aligned to the map.</div>
+                <div className={`${compassReading != 0 ? 'text-muted-foreground' : ''}`}>Your Qiblat is on the green line direction.</div>
             </div>
 
             <div style={{ height: "400px", width: "100%", position: "relative" }}>
@@ -76,6 +118,8 @@ const CompassMap = ({ compassReading, qiblatReading, lat, lng }: CompassMapProps
                     </div>
                 </div>
             </div>
+
+            
         </div>
     )
 }

@@ -22,7 +22,7 @@ export default function Home() {
     updateJadualSolat(jadualSolat)
   }
   
-  const [compassReading, updateCompassReading] = useState<number | null>(null)
+  const [compassReading, updateCompassReading] = useState<number | null>(0)
   const [currentPosition, updateCurrentPosition] = useState<{
     lat: number
     lng: number
