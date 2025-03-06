@@ -117,7 +117,7 @@ useEffect(() => {
         } else {
             setCalibrationNeeded(false);
             setCalibrationConfidence('high');
-            updateReading(readingHistory[readingHistory.length - 1]);
+            updateReading(360 - (readingHistory[readingHistory.length - 1]));
         }
     };
 
