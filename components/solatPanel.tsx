@@ -1,17 +1,20 @@
 import { GetSolatResponses } from "@/app/api/getSolat/route"
 import { formatHijri } from "@/lib/utils"
-import { ExternalLink, MinusCircle, PlusCircle } from "lucide-react"
+import { Clipboard, ClipboardCopy, ClipboardCopyIcon, ExternalLink, MinusCircle, PlusCircle, SendToBack, Share, Share2 } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
+import { Button } from "./ui/button"
+import { toast } from "sonner"
 
 interface SolatPanelProps {
     updateTimer : (timer: string | null) => void
     jadualSolat: GetSolatResponses
 }
 
-const SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
+const 
+SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
     const [currentTime, setCurrentTime] = useState<Date | null>(null)
-    const [index, setIndex] = useState<number>(new Date().getDay() + 1)
+    const [index, setIndex] = useState<number>(new Date().getDate() + 1)
     const [nextPrayer, setNextPrayer] = useState({
         prayer: "",
         time: "",
@@ -19,6 +22,34 @@ const SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
     const [timerCountdown, setTimerCountdown] = useState('');
     const [pulsateClass, setPulsateClass] = useState('pulsate-indigo');
     const [displayDay, setDisplayDay] = useState<Date>(new Date())
+
+    const generateText = () => {
+        let notes = ""
+        notes += "\n\n"
+        notes += "Date: \t\t" + (new Date().toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'long' })) + "\n"
+        notes += "Hijri Date: \t" + formatHijri(jadualSolat.prayerTimes[index - 1].hijri) + "\n"
+        notes += "Zone: \t\t" + jadualSolat.zon.district + " (" + jadualSolat.zon.code + ")" + "\n\n"
+        notes += convertTime(jadualSolat.prayerTimes[index - 1].fajr) + "\t\tFajr\n"
+        notes += convertTime(jadualSolat.prayerTimes[index - 1].dhuhr) + "\t\tDhuhr\n"
+        notes += convertTime(jadualSolat.prayerTimes[index - 1].asr) + "\t\tAsr\n"
+        notes += convertTime(jadualSolat.prayerTimes[index - 1].maghrib) + "\t\tMaghrib\n"
+        notes += convertTime(jadualSolat.prayerTimes[index - 1].isha) + "\t\tIsha\n"
+        notes += "\n"
+        notes += "Solat.Today by drmsr"
+        notes += "\n"
+        notes += "https://solat.today/"
+        return notes
+    }
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(generateText())
+        toast("Copied to clipboard")
+    }
+
+    const handleWhatsapp = () => {
+        const url = "https://api.whatsapp.com/send?text=" + encodeURIComponent(generateText())
+        window.open(url, '_blank')
+    }
 
     function convertTime(time: number) {
         const date = new Date(time * 1000);
@@ -55,6 +86,7 @@ const SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
 
     function getCurrentPrayer() {
         const today = (new Date().getDate()) - 1
+        console.log("Today: " + today)
 
         if (currentTime != undefined && jadualSolat.prayerTimes[0] != undefined) {
             const comparedTime = currentTime.getTime() / 1000;
@@ -113,9 +145,6 @@ const SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
 
     // Function to handle increasing the index
     const handleIncrementIndex = () => {
-        if (jadualSolat.prayerTimes && jadualSolat.prayerTimes.length > index + 1) {
-            setIndex(prev => prev + 1);
-        }
         
         // Create a new Date object to avoid mutating the original state
         const newDate = new Date(displayDay);
@@ -125,16 +154,16 @@ const SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
         newDate.setDate(newDate.getDate() + 1);
         
         // Only update if we're still in the same month
-        if (newDate.getMonth() === currentMonth) {
+        if (index < jadualSolat.prayerTimes.length - 1) {
             setDisplayDay(newDate);
+            setIndex(prev => prev + 1);
+
         }
     };
 
     // Function to handle decreasing the index
     const handleDecrementIndex = () => {
-        if (index > 0) {
-            setIndex(prev => prev - 1);
-        }
+
         
         // Create a new Date object to avoid mutating the original state
         const newDate = new Date(displayDay);
@@ -144,8 +173,9 @@ const SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
         newDate.setDate(newDate.getDate() - 1);
         
         // Only update if we're still in the same month
-        if (newDate.getMonth() === currentMonth) {
+        if (index > 0) {
             setDisplayDay(newDate);
+            setIndex(prev => prev - 1);
         }
     };
 
@@ -171,14 +201,24 @@ const SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
             </div>
             <div className="p-4 flex justify-center items-between border-b bg-gray-50">
                 <h4 className="font-semibold text-left mr-auto">Hijri</h4>
-                <p className="text-gray-700">{formatHijri(jadualSolat.prayerTimes[new Date().getDay() + 1].hijri)}</p>
+                <p className="text-gray-700">{formatHijri(jadualSolat.prayerTimes[new Date().getDate() + 1].hijri)}</p>
             </div>
             <div className="p-4 flex justify-center items-between border-b bg-gray-50">
                 <h4 className="font-semibold text-left mr-auto">Qiblat Azimuth</h4>
                 <p className="text-gray-700">{jadualSolat.bearing.toFixed(2)}°</p>
             </div>
             <div className="p-4 flexborder-b bg-white rounded-b-lg">
+                <div className="flex flex-row justify-between items-center">
                 <h4 className="font-semibold text-left">All Prayers</h4>
+                <div className="space-x-2">
+                    <Button size="icon" variant="outline" onClick={() => handleCopy()}>
+                        <Clipboard size={20} className="cursor-pointer hover:text-blue-500" />
+                    </Button>
+                    <Button size="icon" variant="outline" onClick={() => handleWhatsapp()} className="cursor-pointer hover:bg-blue-500">
+                        <Share size={20} className="" />
+                    </Button>
+                </div>
+                </div>
                 <div className="mx-4 border py-2 px-8 rounded-lg mt-4 flex flex-row items-center justify-between gap-2 text-muted-foreground text-sm">
                     <MinusCircle size={20} className="cursor-pointer hover:text-blue-500" onClick={handleDecrementIndex} />
                     <div className="flex flex-col">
