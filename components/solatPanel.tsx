@@ -1,6 +1,6 @@
 import { GetSolatResponses } from "@/app/api/getSolat/route"
 import { formatHijri } from "@/lib/utils"
-import { Clipboard, ClipboardCopy, ClipboardCopyIcon, ExternalLink, MinusCircle, PlusCircle, SendToBack, Share, Share2 } from "lucide-react"
+import { Clipboard,ExternalLink, MinusCircle, PlusCircle, Share } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 import { Button } from "./ui/button"
@@ -148,7 +148,6 @@ SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
         
         // Create a new Date object to avoid mutating the original state
         const newDate = new Date(displayDay);
-        const currentMonth = newDate.getMonth();
         
         // Increment the date
         newDate.setDate(newDate.getDate() + 1);
@@ -167,7 +166,6 @@ SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
         
         // Create a new Date object to avoid mutating the original state
         const newDate = new Date(displayDay);
-        const currentMonth = newDate.getMonth();
         
         // Decrement the date
         newDate.setDate(newDate.getDate() - 1);
