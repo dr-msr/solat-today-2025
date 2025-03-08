@@ -30,6 +30,7 @@ SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
         notes += "Hijri Date: \t" + formatHijri(jadualSolat.prayerTimes[index].hijri) + "\n"
         notes += "Zone: \t\t" + jadualSolat.zon.district + " (" + jadualSolat.zon.code + ")" + "\n\n"
         notes += convertTime(jadualSolat.prayerTimes[index].fajr) + "\t\tFajr\n"
+        notes += convertTime(jadualSolat.prayerTimes[index].syuruk) + "\t\tSyuruk\n"
         notes += convertTime(jadualSolat.prayerTimes[index].dhuhr) + "\t\tDhuhr\n"
         notes += convertTime(jadualSolat.prayerTimes[index].asr) + "\t\tAsr\n"
         notes += convertTime(jadualSolat.prayerTimes[index].maghrib) + "\t\tMaghrib\n"
