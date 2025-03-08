@@ -26,7 +26,7 @@ SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
     const generateText = () => {
         let notes = ""
         notes += "\n\n"
-        notes += "Date: \t\t" + (new Date().toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'long' })) + "\n"
+        notes += "Date: \t\t" + displayDay.toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'long' }) + "\n"
         notes += "Hijri Date: \t" + formatHijri(jadualSolat.prayerTimes[index - 1].hijri) + "\n"
         notes += "Zone: \t\t" + jadualSolat.zon.district + " (" + jadualSolat.zon.code + ")" + "\n\n"
         notes += convertTime(jadualSolat.prayerTimes[index - 1].fajr) + "\t\tFajr\n"
