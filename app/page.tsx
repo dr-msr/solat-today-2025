@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import CalibrateCompass from "@/components/compassAccuracy";
 import Header from "@/components/header";
 import Map from "@/components/compassMap.client";
+import MasjidList from "@/components/masjidList";
 
 export default function Home() {
   const [jadualSolat, updateJadualSolat] = useLocalStorage<GetSolatResponses | null>('jadualSolat', null)
@@ -29,7 +30,14 @@ export default function Home() {
   } | null>(null)
 
 
-
+  const sortedMasjid = [...(currentJadualSolat?.masjid || [])].sort((a, b) => {
+    // Handle undefined distance values
+    if (a.distance === undefined) return 1; // Move undefined to the end
+    if (b.distance === undefined) return -1; // Move undefined to the end
+    
+    // Convert to number and compare
+    return parseFloat(a.distance) - parseFloat(b.distance);
+});
 
 
 
@@ -37,6 +45,7 @@ export default function Home() {
     if (jadualSolat != undefined) {
       setCurrentJadualSolat(jadualSolat)
       console.log("Jadual Solat Updated at " + new Date())
+      console.log(jadualSolat.masjid)
     }
   }, [jadualSolat])
 
@@ -62,7 +71,9 @@ export default function Home() {
                   <Map compassReading={compassReading} lat={currentPosition.lat} lng={currentPosition.lng} qiblatReading={currentJadualSolat.bearing} />
                 )}
             </TabsContent>
-            <TabsContent value="masjid">Coming Soon</TabsContent>
+            <TabsContent value="masjid">
+              <MasjidList masjid={sortedMasjid} />
+            </TabsContent>
             <TabsList className="w-full flex flex-row border border-gray-300 bg-white rounded-lg shadow-lg w-full items-center justify-evenly p-2">
               <TabsTrigger value="solat" className="w-full px-2">
                 <div>Current Prayer <Badge>{timer}</Badge></div></TabsTrigger>
@@ -70,13 +81,13 @@ export default function Home() {
                 <div>{ (isAlignedWithQiblat({ bearing: currentJadualSolat.bearing, heading: compassReading! })) ? "Qiblat " : "Compass " }<Badge 
                   variant="destructive" 
                   className={cn(
-                    isAlignedWithQiblat({ bearing: currentJadualSolat.bearing, heading: compassReading! }) ? "bg-green-600 hover:bg-green-700" : "bg-gray-600 hover:bg-gray-700"
+                    isAlignedWithQiblat({ bearing: currentJadualSolat.bearing, heading: compassReading! }) ? "bg-green-600 hover:bg-green-700" : "bg-black"
                   )}
                 >
                   {compassReading !== null ? `${compassReading}°` : null}
                 </Badge></div>
               </TabsTrigger>)}
-              <TabsTrigger value="masjid" className="w-full px-2">Mosques</TabsTrigger>
+              <TabsTrigger value="masjid" className="w-full px-2">Masjid <Badge>{parseFloat(sortedMasjid[0].distance).toFixed(2)} km</Badge></TabsTrigger>
             </TabsList>
             <CalibrateCompass updateReading={(reading : number) => updateCompassReading(reading)}  />
 

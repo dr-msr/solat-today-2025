@@ -27,3 +27,12 @@ export function formatHijri(input : string) {
   const output = day + " " + hijriMonths[month] + " " + year + "H"
   return output;
 }
+
+export function cap1st(str: string) {
+  const strLow = str.toLowerCase();
+  const strWords = strLow.split(" ");
+  strWords.forEach((word, index) => {
+    strWords[index] = word.charAt(0).toUpperCase() + word.slice(1);
+  });
+  return strWords.join(" ");
+}

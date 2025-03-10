@@ -1,10 +1,11 @@
 import { GetSolatResponses } from "@/app/api/getSolat/route"
 import { formatHijri } from "@/lib/utils"
-import { Clipboard,ExternalLink, MinusCircle, PlusCircle, Share } from "lucide-react"
+import { Clipboard,ExternalLink, Lightbulb, LightbulbOff, MinusCircle, PlusCircle, Share } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 import { Button } from "./ui/button"
 import { toast } from "sonner"
+import { useLocalStorage } from "react-use"
 
 interface SolatPanelProps {
     updateTimer : (timer: string | null) => void
@@ -20,8 +21,9 @@ SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
         time: "",
     })
     const [timerCountdown, setTimerCountdown] = useState('');
-    const [pulsateClass, setPulsateClass] = useState('pulsate-indigo');
+    const [pulsateClass, setPulsateClass] = useState<string | null>(null);
     const [displayDay, setDisplayDay] = useState<Date>(new Date())
+    const [showBlink, setShowBlink] = useLocalStorage('showBlink', true)    
 
     const generateText = () => {
         let notes = ""
@@ -75,7 +77,7 @@ SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
             updateTimer(currentPrayer);
         }
         if (hours > 0) {
-            setPulsateClass('pulsate-indigo-slow');
+            setPulsateClass(null);
         } else {
             if (minutes <= 15) {
                 setPulsateClass('pulsate-red');
@@ -186,12 +188,20 @@ SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
 
     return (
         <div>
-            <div className="p-4 flex justify-center items-between border-b">
+            <div className="p-2 py-4 flex flex-col justify-center items-between border-b">
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6, justifyContent: 'space-between', alignItems: 'center' }}>
                     <div className="text-sm">{currentTime ? currentTime.toLocaleString('default', { weekday: 'long', day: 'numeric', month: 'long' }) + ' - ' + currentTime.toLocaleTimeString(undefined, { hour12: true }) : 'Loading..'} </div>
-                    <div className={`text-5xl font-bold mb-1 ${pulsateClass}`}>{timerCountdown}</div>
-                </div>
+                    {showBlink ? 
+                        <div className={`text-5xl font-bold mb-1 ${pulsateClass}`}>{timerCountdown}</div> : 
+                    <div className={`text-5xl font-bold mb-1`}>{timerCountdown}</div>
+                    }
+
+                </div>         
+                { pulsateClass && <div className="self-end justify-end">
+                    {showBlink ? <Lightbulb size={16} onClick={() => setShowBlink(!showBlink)} /> : <LightbulbOff size={16} onClick={() => setShowBlink(!showBlink)} />}
+                </div>}
             </div>
+
             <div className="p-4 flex justify-center items-between border-b bg-gray-50">
                 <h4 className="font-semibold text-left mr-auto">Upcoming</h4>
                 <div className="self-center">
