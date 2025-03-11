@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import { GetSolatResponses } from "@/app/api/getSolat/route";
+import { useState } from 'react';
+import { GetSolatResponses } from "@/app/actions/getSolat";
 import { cap1st } from "@/lib/utils";
 import { Badge } from './ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
@@ -77,7 +77,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
     };
     
     // Function to translate text
-    const translateText = useCallback(async (text: string, field: keyof Omit<TranslationState, 'isLoading'>) => {
+    const handleTranslate = async (text: string, field: keyof Omit<TranslationState, 'isLoading'>) => {
         if (!text || text.trim() === '') return;
         
         try {
@@ -90,38 +90,19 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                 }
             }));
             
-            // Call the translation API
-            const response = await fetch('/api/translate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ text }),
-            });
+            // Import and call the server action
+            const { translateText } = await import('@/app/actions/translate');
+            const translatedText = await translateText(text);
             
-            const data = await response.json();
-            
-            if (response.ok && data.translatedText) {
-                // Update the translation for the specific field
-                setTranslations(prev => ({
-                    ...prev,
-                    [field]: data.translatedText,
-                    isLoading: {
-                        ...prev.isLoading,
-                        [field]: false
-                    }
-                }));
-            } else {
-                console.error('Translation error:', data.error);
-                // Reset loading state on error
-                setTranslations(prev => ({
-                    ...prev,
-                    isLoading: {
-                        ...prev.isLoading,
-                        [field]: false
-                    }
-                }));
-            }
+            // Update the translation for the specific field
+            setTranslations(prev => ({
+                ...prev,
+                [field]: translatedText,
+                isLoading: {
+                    ...prev.isLoading,
+                    [field]: false
+                }
+            }));
         } catch (error) {
             console.error('Failed to translate:', error);
             // Reset loading state on error
@@ -133,7 +114,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                 }
             }));
         }
-    }, []);
+    };
 
 
 
@@ -247,7 +228,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                             <div className="flex justify-between items-center">
                                                 <Badge className="text-sm font-medium text-left">History</Badge>
                                                 <button 
-                                                    onClick={() => translateText(selectedMasjid.sejarah, 'sejarah')}
+                                                    onClick={() => handleTranslate(selectedMasjid.sejarah, 'sejarah')}
                                                     className="text-xs text-emerald-600 hover:text-emerald-700 flex items-center"
                                                     disabled={translations.isLoading.sejarah}
                                                 >
@@ -270,7 +251,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                             <div className="flex justify-between items-center">
                                                 <Badge className="text-sm font-medium text-left">Building Information</Badge>
                                                 <button 
-                                                    onClick={() => translateText(selectedMasjid.binaan, 'binaan')}
+                                                    onClick={() => handleTranslate(selectedMasjid.binaan, 'binaan')}
                                                     className="text-xs text-emerald-600 hover:text-emerald-700 flex items-center"
                                                     disabled={translations.isLoading.binaan}
                                                 >
@@ -294,7 +275,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                     )}
 
                                     {selectedMasjid.kos && parseFloat(selectedMasjid.kos) > 0 && (
-                                        <p className="flex flex-row justify-between text-sm"><Badge className="text-sm font-medium">Kos Pembinaan :</Badge> <Badge variant="outline">RM {parseFloat(selectedMasjid.kos).toLocaleString()}</Badge></p>
+                                        <p className="flex flex-row justify-between text-sm"><Badge className="text-sm font-medium">Cost of Construction :</Badge> <Badge variant="outline">RM {parseFloat(selectedMasjid.kos).toLocaleString()}</Badge></p>
                                     )}
                                 </TabsContent>
 
@@ -305,7 +286,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                             <div className="flex justify-between items-center">
                                                 <Badge className="text-sm font-medium text-left">Facilities</Badge>
                                                 <button 
-                                                    onClick={() => translateText(selectedMasjid.kemudahan, 'kemudahan')}
+                                                    onClick={() => handleTranslate(selectedMasjid.kemudahan, 'kemudahan')}
                                                     className="text-xs text-emerald-600 hover:text-emerald-700 flex items-center"
                                                     disabled={translations.isLoading.kemudahan}
                                                 >
@@ -331,7 +312,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                             <div className="flex justify-between items-center">
                                                 <Badge className="text-sm font-medium text-left">Special Attributes</Badge>
                                                 <button 
-                                                    onClick={() => translateText(selectedMasjid.istimewa, 'istimewa')}
+                                                    onClick={() => handleTranslate(selectedMasjid.istimewa, 'istimewa')}
                                                     className="text-xs text-emerald-600 hover:text-emerald-700 flex items-center"
                                                     disabled={translations.isLoading.istimewa}
                                                 >
@@ -406,7 +387,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                             <div className="flex justify-between items-center">
                                                 <Badge className="text-sm font-medium text-left">Location Description</Badge>
                                                 <button 
-                                                    onClick={() => translateText(selectedMasjid.lokasi, 'lokasi')}
+                                                    onClick={() => handleTranslate(selectedMasjid.lokasi, 'lokasi')}
                                                     className="text-xs text-emerald-600 hover:text-emerald-700 flex items-center"
                                                     disabled={translations.isLoading.lokasi}
                                                 >

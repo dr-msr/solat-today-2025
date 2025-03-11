@@ -1,6 +1,6 @@
 'use client'
 
-import { GetSolatResponses } from "@/app/api/getSolat/route";
+import { GetSolatResponses } from "@/app/actions/getSolat";
 import { CircleX, RefreshCcwIcon } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { PuffLoader } from "react-spinners";
@@ -151,14 +151,8 @@ const ZonIndicator = ({ updateJadualSolat, updateCurrentPosition }: ZonIndicator
                 setSolatLoading(true)
                 setSolatError(null)
 
-                const res = await fetch(`/api/getSolat?latitude=${currentLocation.lat}&longitude=${currentLocation.lng}`)
-
-                if (!res.ok) {
-                    const errorData = await res.json()
-                    throw new Error(errorData.error)
-                }
-
-                const data: GetSolatResponses = await res.json()
+                const { getSolatData } = await import('@/app/actions/getSolat');
+                const data = await getSolatData(currentLocation.lat.toString(), currentLocation.lng.toString())
                 setJadualSolat(data)
                 console.log('Prayer times retrieved:', data.zon)
                 updateJadualSolat(data)

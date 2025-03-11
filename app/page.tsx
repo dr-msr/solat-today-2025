@@ -1,7 +1,6 @@
 'use client'
 
 import ZonIndicator from "@/components/zonIndicator";
-import { GetSolatResponses } from "./api/getSolat/route";
 import SolatPanel from "@/components/solatPanel";
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,6 +12,7 @@ import CalibrateCompass from "@/components/compassAccuracy";
 import Header from "@/components/header";
 import Map from "@/components/compassMap.client";
 import MasjidList from "@/components/masjidList";
+import { GetSolatResponses } from "./actions/getSolat";
 
 export default function Home() {
   const [jadualSolat, updateJadualSolat] = useLocalStorage<GetSolatResponses | null>('jadualSolat', null)
@@ -45,7 +45,6 @@ export default function Home() {
     if (jadualSolat != undefined) {
       setCurrentJadualSolat(jadualSolat)
       console.log("Jadual Solat Updated at " + new Date())
-      console.log(jadualSolat.masjid)
     }
   }, [jadualSolat])
 

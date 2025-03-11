@@ -1,4 +1,3 @@
-import { GetSolatResponses } from "@/app/api/getSolat/route"
 import { formatHijri } from "@/lib/utils"
 import { Clipboard,ExternalLink, Lightbulb, LightbulbOff, MinusCircle, PlusCircle, Share } from "lucide-react"
 import Link from "next/link"
@@ -6,6 +5,7 @@ import { useState } from "react"
 import { Button } from "./ui/button"
 import { toast } from "sonner"
 import { useLocalStorage } from "react-use"
+import { GetSolatResponses } from "@/app/actions/getSolat"
 
 interface SolatPanelProps {
     updateTimer : (timer: string | null) => void
@@ -78,6 +78,7 @@ SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
         }
         if (hours > 0) {
             setPulsateClass(null);
+
         } else {
             if (minutes <= 15) {
                 setPulsateClass('pulsate-red');
@@ -89,7 +90,6 @@ SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
 
     function getCurrentPrayer() {
         const today = (new Date().getDate()) - 1
-        console.log("Today: " + today)
 
         if (currentTime != undefined && jadualSolat.prayerTimes[0] != undefined) {
             const comparedTime = currentTime.getTime() / 1000;
