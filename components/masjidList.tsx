@@ -246,7 +246,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                                             )}
                                                         </button>
                                                     </div>
-                                                    <div className="border p-2 rounded text-sm whitespace-pre-line">
+                                                    <div className="border p-2 rounded text-sm whitespace-pre-line max-h-[200px] overflow-y-auto">
                                                         {translations.sejarah && !translations.isLoading.sejarah ? translations.sejarah : selectedMasjid.sejarah}
                                                     </div>
                                                 </div>
@@ -269,7 +269,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                                             )}
                                                         </button>
                                                     </div>
-                                                    <div className="border p-2 rounded text-sm whitespace-pre-line">
+                                                    <div className="border p-2 rounded text-sm whitespace-pre-line max-h-[200px] overflow-y-auto">
                                                         {translations.binaan && !translations.isLoading.binaan ? translations.binaan : selectedMasjid.binaan}
                                                     </div>
                                                 </div>
@@ -290,7 +290,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
 
                                 {/* Facilities Tab */}
                                 <TabsContent value="facilities" className="space-y-4">
-                                    {selectedMasjid.kemudahan ? (
+                                    {selectedMasjid.kemudahan.trim() !== "" ? (
                                         <div className="flex flex-col space-y-3">
                                             <div className="flex justify-between items-center">
                                                 <Badge className="text-sm font-medium text-left">Facilities</Badge>
@@ -308,15 +308,16 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                                     )}
                                                 </button>
                                             </div>
-                                            <div className="border p-2 rounded text-sm whitespace-pre-line">
+                                            <div className="border p-2 rounded text-sm whitespace-pre-line max-h-[200px] overflow-y-auto">
                                                 {translations.kemudahan && !translations.isLoading.kemudahan ? translations.kemudahan : selectedMasjid.kemudahan}
                                             </div>
                                         </div>
+                                        
                                     ) : (
                                         <p className="text-sm text-gray-500 italic">No facilities information available</p>
                                     )}
 
-                                    {selectedMasjid.istimewa && (
+                                    {selectedMasjid.istimewa.trim() !== "" && (
                                         <div className="flex flex-col space-y-3">
                                             <div className="flex justify-between items-center">
                                                 <Badge className="text-sm font-medium text-left">Special Attributes</Badge>
@@ -334,7 +335,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                                     )}
                                                 </button>
                                             </div>
-                                            <div className="border p-2 rounded text-sm whitespace-pre-line">
+                                            <div className="border p-2 rounded text-sm whitespace-pre-line max-h-[200px] overflow-y-auto">
                                                 {translations.istimewa && !translations.isLoading.istimewa ? translations.istimewa : selectedMasjid.istimewa}
                                             </div>
                                         </div>
@@ -343,12 +344,6 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                     {selectedMasjid.luas_tanah > 0 && (
                                         <p className="flex flex-row justify-between text-sm"><Badge className="font-medium">Land Area :</Badge> <Badge variant="outline">{selectedMasjid.luas_tanah} acres</Badge></p>
                                     )}
-
-                                    <div className="flex flex-wrap gap-2 mt-3">
-                                        {selectedMasjid.chk_pelancongan === "1" && <Badge variant="outline">Tourism Site</Badge>}
-                                        {selectedMasjid.chk_warisan === "1" && <Badge variant="outline">Heritage Site</Badge>}
-                                        {selectedMasjid.chk_khairuljamek === "1" && <Badge variant="outline">Khairul Jamek</Badge>}
-                                    </div>
                                 </TabsContent>
 
                                 {/* Contact Tab */}
@@ -391,7 +386,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                         <p className="text-sm text-gray-500 italic">No location coordinates available</p>
                                     )}
 
-                                    {selectedMasjid.lokasi && (
+                                    {selectedMasjid.lokasi.trim() !== "" && (
                                         <div className="flex flex-col space-y-3">
                                             <div className="flex justify-between items-center">
                                                 <Badge className="text-sm font-medium text-left">Location Description</Badge>
@@ -409,7 +404,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                                     )}
                                                 </button>
                                             </div>
-                                            <div className="border p-2 rounded text-sm whitespace-pre-line">
+                                            <div className="border p-2 rounded text-sm whitespace-pre-line max-h-[200px] overflow-y-auto">
                                                 {translations.lokasi && !translations.isLoading.lokasi ? translations.lokasi : selectedMasjid.lokasi}
                                             </div>
                                         </div>

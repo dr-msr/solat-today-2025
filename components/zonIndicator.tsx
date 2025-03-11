@@ -184,7 +184,7 @@ const ZonIndicator = ({ updateJadualSolat, updateCurrentPosition }: ZonIndicator
                     {locationError ? locationError : 
                      solatError ? solatError : 
                      solatLoading ? 'Loading prayer times...' : 
-                     jadualSolat ? jadualSolat.zon.district : 'Loading location...'}
+                     jadualSolat ? jadualSolat.zon.state + " : " + jadualSolat.zon.district : 'Loading location...'}
                 </div>
                 <div className="flex flex-row gap-2">
                     {locationError ? <CircleX size={16} className="text-red-500" onClick={() => handleManualRefresh()} /> : locationLoading ? <PuffLoader size={16} /> : <RefreshCcwIcon size={16} className="text-gray-500 hover:text-gray-900 transition-colors" onClick={() => handleManualRefresh()} />
