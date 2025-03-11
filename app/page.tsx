@@ -76,7 +76,7 @@ export default function Home() {
             </TabsContent>
             <TabsList className="w-full flex flex-row border border-gray-300 bg-white rounded-lg shadow-lg w-full items-center justify-evenly p-2">
               <TabsTrigger value="solat" className="w-full px-2">
-                <div>Current Prayer <Badge>{timer}</Badge></div></TabsTrigger>
+                <div>Prayer <Badge>{timer}</Badge></div></TabsTrigger>
                 { compassReading != null && (<TabsTrigger value="kiblat" className="w-full px-2">
                 <div>{ (isAlignedWithQiblat({ bearing: currentJadualSolat.bearing, heading: compassReading! })) ? "Qiblat " : "Compass " }<Badge 
                   variant="destructive" 

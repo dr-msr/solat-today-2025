@@ -29,10 +29,20 @@ export function formatHijri(input : string) {
 }
 
 export function cap1st(str: string) {
-  const strLow = str.toLowerCase();
-  const strWords = strLow.split(" ");
-  strWords.forEach((word, index) => {
-    strWords[index] = word.charAt(0).toUpperCase() + word.slice(1);
-  });
-  return strWords.join(" ");
+  if (!str) return "";
+  
+  // First convert to lowercase
+  let result = str.toLowerCase();
+  
+  // Use a regular expression to match the first letter of each word
+  // This will match:
+  // 1. The very first character of the string
+  // 2. Any character that follows a space
+  // 3. Any character that follows a comma and a space
+  result = result.replace(
+    /(^|\s|,\s*)([a-z])/g, 
+    (match, p1, p2) => p1 + p2.toUpperCase()
+  );
+  
+  return result;
 }
