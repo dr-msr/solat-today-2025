@@ -152,16 +152,26 @@ const ZonIndicator = ({ updateJadualSolat, updateCurrentPosition }: ZonIndicator
                 setSolatError(null)
 
                 const { getSolatData } = await import('@/app/actions/getSolat');
-                const data = await getSolatData(currentLocation.lat.toString(), currentLocation.lng.toString())
-                setJadualSolat(data)
-                console.log('Prayer times retrieved:', data.zon)
-                updateJadualSolat(data)
+                const response = await getSolatData(currentLocation.lat.toString(), currentLocation.lng.toString())
                 
-                // Update our tracking refs
-                lastApiCallTimeRef.current = now
-                lastCoordinatesRef.current = currentLocation
+                // Check if we got an error response
+                if ('error' in response) {
+                    // Handle error response
+                    setSolatError(response.error)
+                    // Don't update jadualSolat on error
+                    // Keep using previous value if it exists
+                } else {
+                    // Handle success response
+                    setJadualSolat(response)
+                    console.log('Prayer times retrieved:', response.zon)
+                    updateJadualSolat(response)
+                    
+                    // Update our tracking refs
+                    lastApiCallTimeRef.current = now
+                    lastCoordinatesRef.current = currentLocation
+                }
             } catch (error) {
-                console.error('Error fetching prayer times:', error)
+                console.error('Error in component when fetching prayer times:', error)
                 setSolatError(error instanceof Error ? error.message : 'Unknown error occurred')
             } finally {
                 setSolatLoading(false)
@@ -184,7 +194,7 @@ const ZonIndicator = ({ updateJadualSolat, updateCurrentPosition }: ZonIndicator
                     {locationError ? locationError : 
                      solatError ? solatError : 
                      solatLoading ? 'Loading prayer times...' : 
-                     jadualSolat ? jadualSolat.zon.state + " : " + jadualSolat.zon.district : 'Loading location...'}
+                     jadualSolat ? `${jadualSolat.zon.state} : ${jadualSolat.zon.district}` : 'Loading location...'}
                 </div>
                 <div className="flex flex-row gap-2">
                     {locationError ? <CircleX size={16} className="text-red-500" onClick={() => handleManualRefresh()} /> : locationLoading ? <PuffLoader size={16} /> : <RefreshCcwIcon size={16} className="text-gray-500 hover:text-gray-900 transition-colors" onClick={() => handleManualRefresh()} />
