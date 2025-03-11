@@ -15,7 +15,7 @@ interface SolatPanelProps {
 const 
 SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
     const [currentTime, setCurrentTime] = useState<Date | null>(null)
-    const [index, setIndex] = useState<number>(new Date().getDate() + 1)
+    const [index, setIndex] = useState<number>(new Date().getDate() - 1)
     const [nextPrayer, setNextPrayer] = useState({
         prayer: "",
         time: "",
@@ -210,7 +210,7 @@ SolatPanel = ({ jadualSolat, updateTimer }: SolatPanelProps) => {
             </div>
             <div className="p-4 flex justify-center items-between border-b bg-gray-50">
                 <h4 className="font-semibold text-left mr-auto">Hijri</h4>
-                <p className="text-gray-700">{formatHijri(jadualSolat.prayerTimes[new Date().getDate() + 1].hijri)}</p>
+                <p className="text-gray-700">{formatHijri(jadualSolat.prayerTimes[new Date().getDate() - 1].hijri)}</p>
             </div>
             <div className="p-4 flex justify-center items-between border-b bg-gray-50">
                 <h4 className="font-semibold text-left mr-auto">Qiblat Azimuth</h4>
