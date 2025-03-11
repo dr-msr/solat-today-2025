@@ -203,7 +203,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                         {selectedMasjid.poskod && (
                                             <p className="text-sm flex flex-row justify-between px-4"><span className="font-medium">Postal Code:</span> <Badge variant="outline">{selectedMasjid.poskod}</Badge></p>
                                         )}
-                                        {selectedMasjid.kapasiti && (
+                                        {selectedMasjid.kapasiti > 0 && (
                                             <p className="text-sm flex flex-row justify-between px-4"><span className="font-medium">Capacity:</span> <Badge variant="outline">{selectedMasjid.kapasiti} pax</Badge></p>
                                         )}
                                         {selectedMasjid.dt_rasmi && selectedMasjid.dt_rasmi !== "0000-00-00" && (
@@ -223,59 +223,68 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
 
                                 {/* History Tab */}
                                 <TabsContent value="history" className="space-y-4">
-                                    {selectedMasjid.sejarah && selectedMasjid.sejarah.trim() !== "" && (
-                                        <div className="flex flex-col space-y-3">
-                                            <div className="flex justify-between items-center">
-                                                <Badge className="text-sm font-medium text-left">History</Badge>
-                                                <button 
-                                                    onClick={() => handleTranslate(selectedMasjid.sejarah, 'sejarah')}
-                                                    className="text-xs text-emerald-600 hover:text-emerald-700 flex items-center"
-                                                    disabled={translations.isLoading.sejarah}
-                                                >
-                                                    {translations.isLoading.sejarah ? (
-                                                        <span>Translating...</span>
-                                                    ) : translations.sejarah ? (
-                                                        <span>Show Original</span>
-                                                    ) : (
-                                                        <span>Translate</span>
-                                                    )}
-                                                </button>
-                                            </div>
-                                            <div className="border p-2 rounded text-sm whitespace-pre-line">
-                                                {translations.sejarah && !translations.isLoading.sejarah ? translations.sejarah : selectedMasjid.sejarah}
-                                            </div>
-                                        </div>
-                                    )}
-                                    {selectedMasjid.binaan && (
-                                        <div className="flex flex-col space-y-3">
-                                            <div className="flex justify-between items-center">
-                                                <Badge className="text-sm font-medium text-left">Building Information</Badge>
-                                                <button 
-                                                    onClick={() => handleTranslate(selectedMasjid.binaan, 'binaan')}
-                                                    className="text-xs text-emerald-600 hover:text-emerald-700 flex items-center"
-                                                    disabled={translations.isLoading.binaan}
-                                                >
-                                                    {translations.isLoading.binaan ? (
-                                                        <span>Translating...</span>
-                                                    ) : translations.binaan ? (
-                                                        <span>Show Original</span>
-                                                    ) : (
-                                                        <span>Translate</span>
-                                                    )}
-                                                </button>
-                                            </div>
-                                            <div className="border p-2 rounded text-sm whitespace-pre-line">
-                                                {translations.binaan && !translations.isLoading.binaan ? translations.binaan : selectedMasjid.binaan}
-                                            </div>
-                                        </div>
-                                    )}
+                                    {(selectedMasjid.sejarah && selectedMasjid.sejarah.trim() !== "") || 
+                                     (selectedMasjid.binaan && selectedMasjid.binaan.trim() !== "") || 
+                                     (selectedMasjid.dt_bina && selectedMasjid.dt_bina !== "0000-00-00") || 
+                                     (selectedMasjid.kos && parseFloat(selectedMasjid.kos) > 0) ? (
+                                        <>
+                                            {selectedMasjid.sejarah && selectedMasjid.sejarah.trim() !== "" && (
+                                                <div className="flex flex-col space-y-3">
+                                                    <div className="flex justify-between items-center">
+                                                        <Badge className="text-sm font-medium text-left">History</Badge>
+                                                        <button 
+                                                            onClick={() => handleTranslate(selectedMasjid.sejarah, 'sejarah')}
+                                                            className="text-xs text-emerald-600 hover:text-emerald-700 flex items-center"
+                                                            disabled={translations.isLoading.sejarah}
+                                                        >
+                                                            {translations.isLoading.sejarah ? (
+                                                                <span>Translating...</span>
+                                                            ) : translations.sejarah ? (
+                                                                <span>Show Original</span>
+                                                            ) : (
+                                                                <span>Translate</span>
+                                                            )}
+                                                        </button>
+                                                    </div>
+                                                    <div className="border p-2 rounded text-sm whitespace-pre-line">
+                                                        {translations.sejarah && !translations.isLoading.sejarah ? translations.sejarah : selectedMasjid.sejarah}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            {selectedMasjid.binaan && selectedMasjid.binaan.trim() !== "" && (
+                                                <div className="flex flex-col space-y-3">
+                                                    <div className="flex justify-between items-center">
+                                                        <Badge className="text-sm font-medium text-left">Building Information</Badge>
+                                                        <button 
+                                                            onClick={() => handleTranslate(selectedMasjid.binaan, 'binaan')}
+                                                            className="text-xs text-emerald-600 hover:text-emerald-700 flex items-center"
+                                                            disabled={translations.isLoading.binaan}
+                                                        >
+                                                            {translations.isLoading.binaan ? (
+                                                                <span>Translating...</span>
+                                                            ) : translations.binaan ? (
+                                                                <span>Show Original</span>
+                                                            ) : (
+                                                                <span>Translate</span>
+                                                            )}
+                                                        </button>
+                                                    </div>
+                                                    <div className="border p-2 rounded text-sm whitespace-pre-line">
+                                                        {translations.binaan && !translations.isLoading.binaan ? translations.binaan : selectedMasjid.binaan}
+                                                    </div>
+                                                </div>
+                                            )}
 
-                                    {selectedMasjid.dt_bina && selectedMasjid.dt_bina !== "0000-00-00" && (
-                                        <p className="flex flex-row justify-between text-sm"><Badge className="text-sm font-medium">Construction Date :</Badge> <Badge variant="outline">{selectedMasjid.dt_bina}</Badge></p>
-                                    )}
+                                            {selectedMasjid.dt_bina && selectedMasjid.dt_bina !== "0000-00-00" && (
+                                                <p className="flex flex-row justify-between text-sm"><Badge className="text-sm font-medium">Construction Date :</Badge> <Badge variant="outline">{selectedMasjid.dt_bina}</Badge></p>
+                                            )}
 
-                                    {selectedMasjid.kos && parseFloat(selectedMasjid.kos) > 0 && (
-                                        <p className="flex flex-row justify-between text-sm"><Badge className="text-sm font-medium">Cost of Construction :</Badge> <Badge variant="outline">RM {parseFloat(selectedMasjid.kos).toLocaleString()}</Badge></p>
+                                            {selectedMasjid.kos && parseFloat(selectedMasjid.kos) > 0 && (
+                                                <p className="flex flex-row justify-between text-sm"><Badge className="text-sm font-medium">Cost of Construction :</Badge> <Badge variant="outline">RM {parseFloat(selectedMasjid.kos).toLocaleString()}</Badge></p>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <p className="text-sm text-gray-500 italic">No historical information available</p>
                                     )}
                                 </TabsContent>
 
@@ -331,7 +340,7 @@ const MasjidList = ({ masjid }: MasjidListProps) => {
                                         </div>
                                     )}
 
-                                    {selectedMasjid.luas_tanah && (
+                                    {selectedMasjid.luas_tanah > 0 && (
                                         <p className="flex flex-row justify-between text-sm"><Badge className="font-medium">Land Area :</Badge> <Badge variant="outline">{selectedMasjid.luas_tanah} acres</Badge></p>
                                     )}
 

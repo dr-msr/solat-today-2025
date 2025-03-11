@@ -30,14 +30,16 @@ export default function Home() {
   } | null>(null)
 
 
-  const sortedMasjid = [...(currentJadualSolat?.masjid || [])].sort((a, b) => {
+  const sortedMasjid = [...(currentJadualSolat?.masjid || [])]
+  .sort((a, b) => {
     // Handle undefined distance values
     if (a.distance === undefined) return 1; // Move undefined to the end
     if (b.distance === undefined) return -1; // Move undefined to the end
     
     // Convert to number and compare
     return parseFloat(a.distance) - parseFloat(b.distance);
-});
+  }
+);
 
 
 
@@ -71,7 +73,12 @@ export default function Home() {
                 )}
             </TabsContent>
             <TabsContent value="masjid">
-              <MasjidList masjid={sortedMasjid} />
+              <MasjidList masjid={
+                // Filter for unique no_daftar values while preserving sort order
+                sortedMasjid.filter((item, index, self) => 
+                  index === self.findIndex(t => t.no_daftar === item.no_daftar)
+                )
+              } />
             </TabsContent>
             <TabsList className="w-full flex flex-row border border-gray-300 bg-white rounded-lg shadow-lg w-full items-center justify-evenly p-2">
               <TabsTrigger value="solat" className="w-full px-2">
@@ -86,7 +93,7 @@ export default function Home() {
                   {compassReading !== null ? `${compassReading}°` : null}
                 </Badge></div>
               </TabsTrigger>)}
-              <TabsTrigger value="masjid" className="w-full px-2">Masjid <Badge>{parseFloat(sortedMasjid[0].distance).toFixed(2)} km</Badge></TabsTrigger>
+              {sortedMasjid.length > 0 && <TabsTrigger value="masjid" className="w-full px-2">Masjid <Badge>{sortedMasjid[0].distance ? parseFloat(sortedMasjid[0].distance).toFixed(2) : ""} km</Badge></TabsTrigger>}
             </TabsList>
             <CalibrateCompass updateReading={(reading : number) => updateCompassReading(reading)}  />
 
