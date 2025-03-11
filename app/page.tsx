@@ -47,6 +47,7 @@ export default function Home() {
     if (jadualSolat != undefined) {
       setCurrentJadualSolat(jadualSolat)
       console.log("Jadual Solat Updated at " + new Date())
+      console.log(jadualSolat)
     }
   }, [jadualSolat])
 
