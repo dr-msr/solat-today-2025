@@ -77,7 +77,7 @@ export default function Home() {
                 // Filter for unique no_daftar values while preserving sort order
                 sortedMasjid.filter((item, index, self) => 
                   index === self.findIndex(t => t.no_daftar === item.no_daftar)
-                )
+                ).slice(0, 5)
               } />
             </TabsContent>
             <TabsList className="w-full flex flex-row border border-gray-300 bg-white rounded-lg shadow-lg w-full items-center justify-evenly p-2">
