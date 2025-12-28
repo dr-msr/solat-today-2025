@@ -56,6 +56,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script defer src="https://stat.drmsr.dev/script.js" data-website-id="24b5ea17-f089-4a1d-91a3-bbab6d8d84c7"></script>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
