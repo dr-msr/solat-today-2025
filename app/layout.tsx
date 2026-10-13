@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://solat.today"),
   title: "Solat.Today by drmsr",
   description: "Get the prayer times for your location - Grounded with JAKIM Malaysia Database",
   icons: {
@@ -24,14 +25,6 @@ export const metadata: Metadata = {
     description: "Get the prayer times for your location - Grounded with JAKIM Malaysia Database",
     url: "https://solat.today/",
     siteName: "Solat.Today by drmsr",
-    images: [
-      {
-        url: "https://solat.today/og.png",
-        width: 1200,
-        height: 630,
-        alt: "Solat.Today by drmsr",
-      },
-    ],
     locale: "en-US",
     type: "website",
   },
@@ -41,11 +34,6 @@ export const metadata: Metadata = {
     description: "Get the prayer times for your location - Grounded with JAKIM Malaysia Database",
     creator: "@drmsr",
     site: "@drmsr",
-    images: [
-      {
-        url: "https://solat.today/og.png",
-      },
-    ],
   },
 };
 
@@ -56,9 +44,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <script defer src="https://stat.drmsr.dev/script.js" data-website-id="24b5ea17-f089-4a1d-91a3-bbab6d8d84c7"></script>
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

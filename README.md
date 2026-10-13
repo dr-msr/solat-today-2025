@@ -1,75 +1,42 @@
 # Solat Today
 
-A modern, responsive web application that provides accurate prayer times for Muslims in Malaysia. Built with Next.js and using official JAKIM Malaysia data.
-
-![Solat Today](https://solat.today/og.png)
+Prayer times for Muslims in Malaysia at [solat.today](https://solat.today). The app finds your JAKIM zone from your device location and shows the day's prayer times with a countdown to the next one, the Hijri and Gregorian dates, a qibla compass and the nearest mosques.
 
 ## Features
 
-- **Real-time Prayer Times**: Get accurate prayer times based on your current location
-- **Countdown Timer**: Visual countdown to the next prayer time
-- **Hijri Calendar**: Display current Hijri date alongside Gregorian calendar
-- **Multiple Day View**: Navigate through prayer times for different days
-- **Responsive Design**: Works seamlessly on mobile, tablet, and desktop devices
-- **JAKIM Official Data**: Uses official Malaysian Islamic Development Department data
-- **Offline Support**: Save your zone information for offline access
-- **Nearby Mosques**: Find mosques in your vicinity (coming soon)
-- **Qibla Direction**: Get accurate qibla direction from your location (coming soon)
+- Prayer times for your JAKIM zone, found from your device location
+- Countdown to the next prayer
+- Hijri and Gregorian dates, with navigation across the month
+- Qibla compass with a map
+- Nearest mosques from the JAKIM e-Solat directory
+- Copy or share the day's times to WhatsApp
+- Last zone saved on the device, so the times still show offline
 
-## Technology Stack
+## How it works
 
-- **Frontend**: Next.js 14, React, TypeScript, TailwindCSS
-- **UI Components**: Shadcn UI
-- **API**: Next.js API Routes with external JAKIM data integration
-- **Geolocation**: Browser Geolocation API
-- **Data Storage**: Local storage for offline capabilities
+- Zone lookup runs on the server against a GeoJSON of the 170 JAKIM zones (`lib/solat/zonJakim.json`) with `polygon-lookup`.
+- Monthly prayer times for the zone come from `api.waktusolat.app` (JAKIM e-Solat data).
+- Nearest mosques come from JAKIM e-Solat directly, which receives the coordinates.
+- Qibla bearing per zone is a static table (`lib/solat/bearing.json`).
+- Mosque text can be translated from Malay to English through OpenAI (`OPENAI_API_KEY`).
 
-## Getting Started
+## Stack
 
-First, install dependencies:
+Next.js (app router) with React 19, TypeScript, Tailwind CSS 4 and shadcn/ui. Package manager is pnpm.
+
+## Develop
 
 ```bash
-# Make sure to use the right node version
-nvm use node
-
-# Use pnpm as package manager
 pnpm install
-```
-
-Then, run the development server:
-
-```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
+Open http://localhost:3000. Geolocation needs HTTPS or localhost.
 
-## Environment Variables
+## Deploy
 
-No environment variables are required to run the application locally.
+Railway builds `main` from this repository (service `solat-today-2025`, project `solat-today`). The domain `solat.today` is on Cloudflare and points at the Railway service.
 
-## Deployment
-
-The application is designed to be deployed on Vercel for optimal performance:
-
-```bash
-pnpm build
-```
-
-## Contributing
-
-Contributions are welcome! Feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Credits
-
-- Prayer times data provided by [JAKIM Malaysia](https://www.e-solat.gov.my/)
-- Created by [drmsr](https://x.com/drmsr_dev)
-
-## Links
-
-- Website: [https://solat.today](https://solat.today)
-- GitHub Repository: [https://github.com/dr-msr/solat-today](https://github.com/dr-msr/solat-today)
+| Variable | Purpose |
+| --- | --- |
+| `OPENAI_API_KEY` | Malay to English translation of mosque details |
