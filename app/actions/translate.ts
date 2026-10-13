@@ -2,10 +2,6 @@
 
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function translateText(text: string): Promise<string> {
   try {
     if (!text || typeof text !== 'string') {
@@ -16,6 +12,7 @@ export async function translateText(text: string): Promise<string> {
       throw new Error('OpenAI API key is not configured');
     }
 
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const response = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [

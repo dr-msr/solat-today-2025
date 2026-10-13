@@ -22,7 +22,7 @@ Prayer times for Muslims in Malaysia at [solat.today](https://solat.today). The 
 
 ## Stack
 
-Next.js (app router) with React 19, TypeScript, Tailwind CSS 4 and shadcn/ui. Package manager is pnpm.
+Next.js 16 (app router) with React 19, TypeScript, Tailwind CSS 4 and shadcn/ui, on Node 24. Package manager is pnpm.
 
 ## Develop
 
