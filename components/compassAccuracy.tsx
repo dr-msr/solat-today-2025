@@ -24,7 +24,7 @@ interface CalibrateCompassProps {
 }
 
 export default function CalibrateCompass({ updateReading }: CalibrateCompassProps) {
-    const { orientation, isSupported, isPermissionGranted } = useDeviceOrientation();
+    const { orientation, isSupported, isPermissionGranted, needsPermission, requestPermission } = useDeviceOrientation();
     const [readings, setReadings] = useState<number[]>([]);
     const [isCalibrationNeeded, setCalibrationNeeded] = useState(false);
     const [calibrationConfidence, setCalibrationConfidence] = useState<'high' | 'medium' | 'low' | null>(null);
@@ -58,7 +58,7 @@ useEffect(() => {
     // Track compass readings over time
     useEffect(() => {
         // Don't run if compass isn't available or we don't have permission
-        if (!isSupported || isPermissionGranted !== true || !orientation.alpha) {
+        if (!isSupported || isPermissionGranted !== true || orientation.heading == null) {
             return;
         }
 
@@ -70,7 +70,7 @@ useEffect(() => {
         setLastCheckedTime(now);
 
         // Add current reading to history
-        const currentReading = Math.round(orientation.alpha);
+        const currentReading = Math.round(orientation.heading);
         setReadings(prev => {
             // Keep the last N readings
             const newReadings = [...prev, currentReading].slice(-READING_HISTORY_SIZE);
@@ -83,7 +83,7 @@ useEffect(() => {
             return newReadings;
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [orientation.alpha, isSupported, isPermissionGranted, lastCheckedTime]);
+    }, [orientation.heading, isSupported, isPermissionGranted, lastCheckedTime]);
 
     // Analyze compass readings for stability
     const analyzeCompassStability = (readingHistory: number[]) => {
@@ -117,7 +117,7 @@ useEffect(() => {
         } else {
             setCalibrationNeeded(false);
             setCalibrationConfidence('high');
-            updateReading(360 - (readingHistory[readingHistory.length - 1]));
+            updateReading(readingHistory[readingHistory.length - 1]);
         }
     };
 
@@ -127,6 +127,15 @@ useEffect(() => {
         setReadings([]); // Reset readings to start fresh
         setCalibrationNeeded(false);
     };
+
+    // iOS only hands out orientation data after a tap
+    if (needsPermission && isPermissionGranted === null) {
+        return (
+            <Button variant="outline" size="sm" className="mt-2 w-full" onClick={() => requestPermission()}>
+                Enable compass
+            </Button>
+        );
+    }
 
     // If compass isn't supported or permission not granted, don't show anything
     if (!isSupported || isPermissionGranted !== true) {

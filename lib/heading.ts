@@ -7,6 +7,13 @@ interface DeviceOrientationState {
   beta: number | null;
   gamma: number | null;
   absolute: boolean;
+  // Compass heading in degrees clockwise from north, or null when the device gives no north reference
+  heading: number | null;
+}
+
+// iOS Safari puts the north-referenced heading on the event itself
+interface CompassOrientationEvent extends DeviceOrientationEvent {
+  webkitCompassHeading?: number;
 }
 
 
@@ -31,6 +38,7 @@ function useDeviceOrientation() {
     beta: null,
     gamma: null,
     absolute: false,
+    heading: null,
   });
   
   const [error, setError] = useState<Error | null>(null);
@@ -76,13 +84,32 @@ function useDeviceOrientation() {
     }
   }, [isBrowser, isSecureContext]);
 
+  // Chrome on Android reports a north-referenced alpha only on deviceorientationabsolute;
+  // its plain deviceorientation alpha is relative to wherever the phone was at page load.
+  const eventName = isBrowser && "ondeviceorientationabsolute" in window
+    ? "deviceorientationabsolute"
+    : "deviceorientation";
+
   const handleOrientation = useCallback((event: DeviceOrientationEvent) => {
     try {
+      const compassEvent = event as CompassOrientationEvent;
+      let heading: number | null = null;
+      if (typeof compassEvent.webkitCompassHeading === "number") {
+        heading = compassEvent.webkitCompassHeading;
+      } else if (event.absolute && event.alpha != null) {
+        heading = 360 - event.alpha;
+      }
+      if (heading != null) {
+        // Correct for the screen being rotated to landscape
+        const screenAngle = window.screen?.orientation?.angle ?? 0;
+        heading = (((heading + screenAngle) % 360) + 360) % 360;
+      }
       setOrientation({
         alpha: event.alpha,
         beta: event.beta,
         gamma: event.gamma,
         absolute: !!event.absolute,
+        heading,
       });
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Unknown error in orientation handler'));
@@ -93,14 +120,14 @@ function useDeviceOrientation() {
     if (!isBrowser || !isSupported || isPermissionGranted !== true) return;
     
     try {
-      window.addEventListener("deviceorientation", handleOrientation);
+      window.addEventListener(eventName, handleOrientation as EventListener);
       return () => {
-        window.removeEventListener("deviceorientation", handleOrientation);
+        window.removeEventListener(eventName, handleOrientation as EventListener);
       };
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to set up device orientation event'));
     }
-  }, [isBrowser, isSupported, isPermissionGranted, handleOrientation]);
+  }, [isBrowser, isSupported, isPermissionGranted, handleOrientation, eventName]);
 
   const requestPermission = useCallback(async () => {
     if (!isBrowser || !isSupported) return false;
@@ -136,8 +163,12 @@ function useDeviceOrientation() {
   // Check if running on a mobile device
   const isMobile = isBrowser && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
+  const needsPermission = isSupported &&
+    typeof (window.DeviceOrientationEvent as unknown as DeviceOrientationEventExtended).requestPermission === "function";
+
   return { 
     orientation, 
+    needsPermission,
     requestPermission, 
     isPermissionGranted, 
     isSupported,
